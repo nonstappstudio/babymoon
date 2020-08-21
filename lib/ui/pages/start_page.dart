@@ -34,7 +34,7 @@ class _StartPageState extends State<StartPage> {
 
   Widget _recordsList() {
 
-    List<RecordsInDate> _recordsInRound = [];
+    List<RecordsInDate> _recordsInDay = [];
     final map = <DateTime, List<Record>>{};
 
     _records.forEach((record) { 
@@ -47,19 +47,17 @@ class _StartPageState extends State<StartPage> {
     });
 
     map.forEach((date, records) {
-      _recordsInRound.add(RecordsInDate(date: date, records: records));
+      _recordsInDay.add(RecordsInDate(date: date, records: records));
     });
     
-    _recordsInRound.sort((a,b) => b.date.compareTo(a.date));
-
-    print(map.keys);
+    _recordsInDay.sort((a,b) => b.date.compareTo(a.date));
 
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemCount: map.length,
       itemBuilder: (context, index) {
-        return _recordsInRound[index];
+        return _recordsInDay[index];
       }
     );
   }
