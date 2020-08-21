@@ -1,3 +1,4 @@
+import 'package:babymoon/ui/pages/home_page.dart';
 import 'package:babymoon/ui/pages/start_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: StartPage(),
+      home: HomePage(),
     );
   }
 }
