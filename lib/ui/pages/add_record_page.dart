@@ -82,24 +82,26 @@ class _AddRecordPageState extends State<AddRecordPage> {
                       final _type = TypeForm.fKey.currentState.currentValue;
                       final _duration = DurationForm.fKey
                                                     .currentState.currentValue;
-
-                      double toDouble(TimeOfDay myTime) => myTime.hour + myTime.minute/60.0
+                      
+                      double durationDouble 
+                              = (_duration.hour + _duration.minute)/60.0;
 
                       if (_date != null && _type != null && _duration != null) {
                         print(_duration.minute);
-                        if (toDouble(_duration) <= 0) {
+                        if (durationDouble <= 0) {
                           _displayError(
                             context,
                             'Sleep duration must be bigger than 0 minutes'
                           );
+                        } else {
+                          Navigator.of(context).pop(
+                            Record(
+                              dateTime: _date,
+                              type: _type,
+                              duration: _duration
+                            )
+                          );
                         }
-                        Navigator.of(context).pop(
-                          Record(
-                            dateTime: _date,
-                            type: _type,
-                            duration: _duration
-                          )
-                        );
                       } else {
                         _displayError(
                           context, 
