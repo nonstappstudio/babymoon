@@ -33,7 +33,8 @@ class _NumberPickerWrapperState extends State<NumberPickerWrapper> {
     return NumberPicker.integer(
       initialValue: currentValue,
       minValue: 0,
-      maxValue: 60,
+      maxValue: 59,
+      infiniteLoop: true,
       onChanged: (num) {
         setState(() {
           currentValue = num;
