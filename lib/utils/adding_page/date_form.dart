@@ -1,3 +1,5 @@
+import 'package:babymoon/ui/app_style.dart';
+import 'package:babymoon/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -26,21 +28,19 @@ class _DateFormState extends State<DateForm> {
       onChanged: (date) => currentValue = date,
       initialValue: DateTime.now(),
       attribute: 'date',
-        style: TextStyle(
-          color: Colors.grey
-        ),
+        style: TextStyles.formTextStyle,
         format: dateFormat,
         decoration: InputDecoration(
         labelText: 'Date and time',
-        labelStyle: TextStyle(
-          color: Theme.of(context).primaryColor,
-          fontWeight: FontWeight.w500
+        labelStyle: TextStyles.formLabelStyle,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: AppStyle.accentColor)
         ),
-        prefixIcon: Icon(Icons.event, color: Theme.of(context).primaryColor),
+        prefixIcon: Icon(Icons.event, color: AppStyle.accentColor),
         suffixIcon: Icon(
           Icons.edit, 
           size: 15,
-          color: Theme.of(context).primaryColor,
+          color: AppStyle.accentColor,
         )
       ),
     );

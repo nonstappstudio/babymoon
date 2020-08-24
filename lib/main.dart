@@ -1,11 +1,9 @@
+import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/pages/home_page.dart';
-import 'package:babymoon/ui/pages/start_page.dart';
 import 'package:babymoon/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'ui/pages/home_page.dart';
-import 'ui/widgets/custom_app_bar.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,7 +34,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.getAppBar('title', false),
+      backgroundColor: AppStyle.backgroundColor,
       body: FutureBuilder(
         future: SharedPreferences.getInstance(),
         builder: (context, snapshot) {

@@ -1,3 +1,5 @@
+import 'package:babymoon/ui/app_style.dart';
+import 'package:babymoon/ui/text_styles.dart';
 import 'package:babymoon/ui/widgets/tappable_custom_field.dart';
 import 'package:babymoon/utils/adding_page/number_picker_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +106,6 @@ class _DurationFormState extends State<DurationForm> {
     _hours = 0;
     _minutes = 0;
     currentValue = TimeOfDay(hour: _hours, minute: _minutes);
-    _controller.text = _timeString();
     super.initState();
   }
 
@@ -113,19 +114,17 @@ class _DurationFormState extends State<DurationForm> {
     return TappableCustomField(
       onTap: () => _expand(),
       child: TextFormField(
-        style: TextStyle(
-          color: Colors.grey,
-        ),
+        style: TextStyles.formTextStyle,
         controller: _controller,
         decoration: InputDecoration(
-          labelText: 'Sleep duration',
-          labelStyle: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontWeight: FontWeight.w500,
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppStyle.accentColor)
           ),
+          labelText: 'Sleep duration',
+          labelStyle: TextStyles.formLabelStyle,
           prefixIcon: Icon(
             Icons.access_time, 
-            color: Theme.of(context).primaryColor
+            color: AppStyle.accentColor
           ),
         ),
       )

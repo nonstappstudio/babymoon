@@ -1,6 +1,6 @@
 import 'package:babymoon/ui/app_style.dart';
+import 'package:babymoon/ui/pages/home/home_tab.dart';
 import 'package:flutter/material.dart';
-import '../widgets/custom_app_bar.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -46,20 +46,31 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppStyle.backgroundColor,
-      appBar: CustomAppBar.getAppBar('Sleep Tracker', false),
-      body: PageView(
-        controller: _pageController,
-        children: [
-          Container(color: Colors.red),
-          Container(color: Colors.blue)
-        ],
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppStyle.backgroundColor,
+        title: Text('Babymoon'),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/night.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: PageView(
+          controller: _pageController,
+          children: [
+            HomeTab(),
+            Container(color: Colors.transparent)
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) => _changePage(index),
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppStyle.backgroundColor,
-        selectedItemColor: AppStyle.secondaryColor,
+        selectedItemColor: AppStyle.accentColor,
         unselectedItemColor: AppStyle.unselectedColor,
         currentIndex: _currentPage,
         items: _bottomItems.keys.map((k) {

@@ -1,10 +1,11 @@
+import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';
 
-class StartPageHeader extends StatelessWidget {
+class HomeTabHeader extends StatelessWidget {
 
   final String _headerText = "Get to know your baby's sleep patterns and keep\n"
-                          "track of how much sleep they are getting here"; 
+              "track of how much sleep they are getting here"; 
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class StartPageHeader extends StatelessWidget {
           Text(
             _headerText,
             style: TextStyle(
-              color: Colors.grey[600],
+              color: AppStyle.textColor,
               fontWeight: FontWeight.normal
             ),
           )

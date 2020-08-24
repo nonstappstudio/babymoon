@@ -1,3 +1,4 @@
+import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/models/record.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +27,8 @@ class RecordsInDate extends StatelessWidget {
                 '${DateFormat('EEEE, dd MMM yyyy').format(date)}',
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.grey[700],
-                  fontWeight: FontWeight.bold
+                  color: AppStyle.textColor,
+                  fontWeight: FontWeight.w300
                 ),
               ),
             ],

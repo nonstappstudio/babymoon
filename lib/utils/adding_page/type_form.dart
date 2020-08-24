@@ -1,4 +1,6 @@
+import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/models/record.dart';
+import 'package:babymoon/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:babymoon/utils/extensions/type_extension.dart';
@@ -23,11 +25,10 @@ class _TypeFormState extends State<TypeForm> {
   @override
   Widget build(BuildContext context) {
     return FormBuilderDropdown(
+      dropdownColor: AppStyle.backgroundColor,
       onChanged: (type) => currentValue = type,
       attribute: 'type',
-        style: TextStyle(
-          color: Colors.grey
-        ),
+        style: TextStyles.formTextStyle,
         icon: Padding(
           padding: const EdgeInsets.only(right: 11.0),
           child: Icon(
@@ -37,13 +38,13 @@ class _TypeFormState extends State<TypeForm> {
         ),
         decoration: InputDecoration(
         labelText: 'Sleep type',
-        labelStyle: TextStyle(
-          color: Theme.of(context).primaryColor,
-          fontWeight: FontWeight.w500,
-        ),
+        labelStyle: TextStyles.formLabelStyle,
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppStyle.accentColor)
+          ),
         prefixIcon: Icon(
           Icons.brightness_2, 
-          color: Theme.of(context).primaryColor
+          color: AppStyle.accentColor
         ),
       ),
       items: SleepType.values.map((t) {
