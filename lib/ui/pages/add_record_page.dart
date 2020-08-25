@@ -87,7 +87,6 @@ class _AddRecordPageState extends State<AddRecordPage> {
                               = (_duration.hour + _duration.minute)/60.0;
 
                       if (_date != null && _type != null && _duration != null) {
-                        print(_duration.minute);
                         if (durationDouble <= 0) {
                           _displayError(
                             context,

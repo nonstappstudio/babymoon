@@ -2,7 +2,6 @@ import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/pages/home_page.dart';
 import 'package:babymoon/ui/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'ui/pages/home_page.dart';
 
 void main() {
@@ -30,18 +29,22 @@ class MyApp extends StatelessWidget {
 
 
 class MainScreen extends StatelessWidget {
+
+  Future<bool> _holder() async {
+    return true;
+  }
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppStyle.backgroundColor,
       body: FutureBuilder(
-        future: SharedPreferences.getInstance(),
+        future: _holder(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final prefs = snapshot.data;
 
-            return HomePage(prefs);
+            return HomePage();
 
           } else if (snapshot.hasError) {
 
