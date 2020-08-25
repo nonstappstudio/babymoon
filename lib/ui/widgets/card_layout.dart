@@ -4,18 +4,25 @@ class CardLayout extends StatelessWidget {
 
   final Widget child;
   final Color color;
-  final double opacity;
+  final double insidePadding;
 
   CardLayout({
     this.child,
     this.color,
-    this.opacity
+    this.insidePadding
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: color
+      ),
+      child: Padding(
+        padding: EdgeInsets.all(insidePadding),
+        child: child,
+      )
     );
   }
 }

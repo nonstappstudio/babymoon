@@ -1,4 +1,7 @@
 import 'package:babymoon/models/record.dart';
+import 'package:babymoon/ui/app_style.dart';
+import 'package:babymoon/ui/text_styles.dart';
+import 'package:babymoon/utils/space.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,20 +26,17 @@ class RecordTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: new SizedBox(
-        height: 60.0,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        color: Colors.white,
+        height: 60,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(first ? 10 : 0),
-                  bottomLeft: Radius.circular(last ? 10 : 0)
-                ),
-                color: Colors.grey[200]
-              ),
+              color: AppStyle.backgroundColor,
+              width: 90,
               alignment: Alignment.center,
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
@@ -44,22 +44,17 @@ class RecordTile extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     DateFormat('hh:mm').format(record.dateTime),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500
-                    ),
+                    style: TextStyles.whiteBoldText
                   ),
+                  Space(2),
                   Text(
                     DateFormat('a').format(record.dateTime),
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 13
-                    ),
+                    style: TextStyles.main.copyWith(color: Colors.grey[200])
                   )
                 ],
               ),
             ),
-            Expanded(
+            Flexible(
               child: ListTile(
                 title: Text(
                 record.type.stringValue,

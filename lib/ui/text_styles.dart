@@ -10,6 +10,12 @@ class TextStyles {
      fontWeight: FontWeight.w300
   );
 
+  static TextStyle get whiteBoldText => TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 15,
+    color: AppStyle.textColor
+  );
+
   static TextStyle get appBarStyle => TextStyle(
     color: AppStyle.accentColor,
     fontWeight: FontWeight.w400,

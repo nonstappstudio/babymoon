@@ -34,14 +34,11 @@ class RecordsInDate extends StatelessWidget {
             ],
           ),
           Space(5),
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10)
-            ),
-            elevation: 2,
+          Container(
+            color: Colors.transparent,
             child: ListView.separated(
-              separatorBuilder: (context, index) 
-                  => Divider(color: Colors.grey[400], height: 0),
+              separatorBuilder: (_, __) 
+                  => Divider(color: Colors.transparent, height: 8),
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: records.length,
