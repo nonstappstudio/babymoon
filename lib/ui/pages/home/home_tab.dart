@@ -1,4 +1,5 @@
 import 'package:babymoon/models/record.dart';
+import 'package:babymoon/services/repositories/record_repository.dart';
 import 'package:babymoon/ui/pages/add_record_page.dart';
 import 'package:babymoon/ui/text_styles.dart';
 import 'package:babymoon/ui/widgets/home_tab_header.dart';
@@ -59,7 +60,8 @@ class _HomeTabState extends State<HomeTab> {
           child: Container(
             child: Text(
               'There is nothing to display...\n'
-              'You can add new sleeping record by clicking on the button above',
+              'You can add new sleeping record by '
+              'clicking on the button above',
               textAlign: TextAlign.center,
               style: TextStyles.main.copyWith(
                 fontSize: 14,
@@ -72,29 +74,7 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
-  void _handleAddRecord() async {
-    final Record result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        fullscreenDialog: true,
-          builder: (context) => AddRecordPage(),
-      ),
-    );
-
-    if(result != null){
-      setState(() {
-        _records.add(result);
-      });
-    }
-  }
-  
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _content() {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -111,6 +91,45 @@ class _HomeTabState extends State<HomeTab> {
           ],
         ),
       )
+    );
+  }
+
+  void _handleAddRecord() async {
+    final Record record = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        fullscreenDialog: true,
+          builder: (context) => AddRecordPage(),
+      ),
+    );
+
+    if(record != null) {
+      final result = await RecordRepository.insertRecord(record);
+
+      if (result) {
+        setState(() {});
+      }
+    }
+  }
+  
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: RecordRepository.getAllrecords(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          _records = snapshot.data;
+          return _content();
+        } else if (snapshot.hasError) {
+          return Center(child: Text('${snapshot.error}'));
+        }
+        return Center(child: CircularProgressIndicator());
+      }
     );
   }
 }

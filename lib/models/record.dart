@@ -1,12 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:babymoon/utils/extensions/all_extensions.dart';
 
 class Record {
 
+  final int id;
   final DateTime dateTime;
   final SleepType type;
   final TimeOfDay duration;
 
   Record({
+    this.id,
     this.dateTime,
     this.type,
     this.duration
@@ -20,22 +24,19 @@ class Record {
 
   factory Record.fromJson(Map<String, dynamic> json) {
     return Record(
-      dateTime: json['dateTime'],
-      type: json['type'],
-      duration: json['duration']
+      id: json['id'],
+      dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
+      type: SleepType.values
+            .firstWhere((t) => describeEnum(t).toLowerCase() == json['type']),
+      duration: (json['duration'] as String).timeOfDay
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'dateTime': dateTime,
-    'type': type,
-    'duration': duration,
-  };
-
-  Map<String, dynamic> listToJson(List<Record> records) => {
-    'allRecords': records.map((r) {
-      r.toJson();
-    }).toList()
+    'id': dateTime.millisecondsSinceEpoch,
+    'dateTime': dateTime.millisecondsSinceEpoch,
+    'type': type.dbSafeString,
+    'duration': duration.toJson,
   };
 }
 

@@ -7,4 +7,6 @@ extension TypeString on SleepType {
         .toUpperCase() + 
       describeEnum(this).substring(1).toLowerCase()
         .replaceAll('ights', "ight's").replaceAll('_', ' ');
+
+  String get dbSafeString => describeEnum(this).toLowerCase();
 } 
