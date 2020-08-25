@@ -1,5 +1,5 @@
 import 'package:babymoon/ui/app_style.dart';
-import 'package:babymoon/ui/models/record.dart';
+import 'package:babymoon/models/record.dart';
 import 'package:babymoon/utils/adding_page/all_forms.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:babymoon/ui/widgets/gradient_button.dart';

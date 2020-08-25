@@ -1,8 +1,14 @@
+import 'package:babymoon/services/repositories/record_repository.dart';
 import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/pages/home/home_tab.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
+
+  final SharedPreferences prefs;
+
+  HomePage([this.prefs]);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -12,6 +18,8 @@ class _HomePageState extends State<HomePage> {
 
   PageController _pageController;
   int _currentPage;
+
+  SharedPreferences get prefs => widget.prefs;
 
   Map<String, Widget> get _bottomItems => {
     'Home': Icon(Icons.home),
@@ -61,7 +69,7 @@ class _HomePageState extends State<HomePage> {
         child: PageView(
           controller: _pageController,
           children: [
-            HomeTab(),
+            HomeTab(prefs),
             Container(color: Colors.transparent)
           ],
         ),

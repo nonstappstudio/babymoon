@@ -39,8 +39,9 @@ class MainScreen extends StatelessWidget {
         future: SharedPreferences.getInstance(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            final prefs = snapshot.data;
 
-            return HomePage();
+            return HomePage(prefs);
 
           } else if (snapshot.hasError) {
 

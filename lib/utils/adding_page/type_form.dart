@@ -1,5 +1,5 @@
 import 'package:babymoon/ui/app_style.dart';
-import 'package:babymoon/ui/models/record.dart';
+import 'package:babymoon/models/record.dart';
 import 'package:babymoon/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';

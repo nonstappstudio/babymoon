@@ -1,4 +1,4 @@
-import 'package:babymoon/ui/models/record.dart';
+import 'package:babymoon/models/record.dart';
 import 'package:flutter/foundation.dart';
 
 extension TypeString on SleepType {
