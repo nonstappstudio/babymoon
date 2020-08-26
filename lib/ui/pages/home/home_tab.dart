@@ -70,7 +70,7 @@ class _HomeTabState extends State<HomeTab> {
 
   Widget get _content => SingleChildScrollView(
     child: Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         children: <Widget>[
           HomeTabHeader(),

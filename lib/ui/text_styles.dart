@@ -16,6 +16,12 @@ class TextStyles {
     color: AppStyle.textColor
   );
 
+  static TextStyle get mainWhite => TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 15,
+    color: AppStyle.textColor
+  );
+
   static TextStyle get appBarStyle => TextStyle(
     color: AppStyle.accentColor,
     fontWeight: FontWeight.w400,

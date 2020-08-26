@@ -28,10 +28,6 @@ class MyApp extends StatelessWidget {
 
 
 class MainScreen extends StatelessWidget {
-
-  Future<bool> _holder() async {
-    return true;
-  }
   
   @override
   Widget build(BuildContext context) {

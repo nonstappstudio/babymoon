@@ -1,5 +1,6 @@
 import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/pages/home/home_tab.dart';
+import 'package:babymoon/ui/pages/home/statistics_tab.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,9 +62,12 @@ class _HomePageState extends State<HomePage> {
         ),
         child: PageView(
           controller: _pageController,
+          onPageChanged: (index) => setState(() => _currentPage = index),
           children: [
             HomeTab(),
-            Container(color: Colors.transparent)
+            StatisticsTab(),
+            Container(color: Colors.transparent, child: Center(child: Text('L'))),
+            Container(color: Colors.transparent, child: Center(child: Text('P'))),
           ],
         ),
       ),
