@@ -10,10 +10,8 @@ import 'package:babymoon/utils/extensions/type_extension.dart';
 class RecordTile extends StatelessWidget {
 
   final Record record;
-  final bool first;
-  final bool last;
   
-  RecordTile({@required this.record, this.first, this.last});
+  RecordTile({@required this.record});
 
   //TODO: Do pluralization with locale (intl)
   String get _durationHours => record.duration.hour == 1 

@@ -45,25 +45,8 @@ class RecordsInDate extends StatelessWidget {
               itemBuilder: (context, index) {
 
                 records.sort((a, b) => b.dateTime.compareTo(a.dateTime));
-                
-                if (records[index] == records.first) {
-                  return RecordTile(
-                    record: records[index], 
-                    first: true, 
-                    last: false
-                  );
-                } else if (records[index] == records.last) {
-                  return RecordTile(
-                    record: records[index], 
-                    first: false, 
-                    last: true
-                  );
-                }
-                return RecordTile(
-                  record: records[index], 
-                  first: false, 
-                  last: false
-                );
+
+                return RecordTile(record: records[index]);
               }
             ),
           ),
