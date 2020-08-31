@@ -20,4 +20,6 @@ class AppStyle {
   static Color get blueyColor => Colors.indigo[400];
 
   static Color get unselectedColor => Colors.grey;
+
+  static Color get errorColor => Colors.red;
 }

@@ -43,4 +43,14 @@ class TextStyles {
     color: AppStyle.accentColor,
     fontWeight: FontWeight.w300
   );
+
+  static TextStyle get deleteButtonTextStyle => TextStyle(
+    color: AppStyle.errorColor,
+    fontWeight: FontWeight.w400
+  );
+
+  static TextStyle get cancelButtonTextStyle => TextStyle(
+    color: AppStyle.unselectedColor,
+    fontWeight: FontWeight.w300
+  );
 }

@@ -20,11 +20,9 @@ class RecordRepository {
 
   static Future<bool> updateRecord(Record record) async {
 
-    //final database = await AppDatabase.instance.database;
-
     final finder = Finder(filter: Filter.byKey(record.id));
     final result = await recordsFolder
-                          .update(await database, record.toJson(),finder: finder);
+                        .update(await database, record.toJson(),finder: finder);
 
     return result != null;
     

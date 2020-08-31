@@ -33,7 +33,9 @@ class _HomeTabState extends State<HomeTab> {
     });
 
     map.forEach((date, records) {
-      _recordsInDay.add(RecordsInDate(date: date, records: records));
+      _recordsInDay.add(
+        RecordsInDate(date: date, records: records, onDelete: _deleteRecord)
+      );
     });
     
     _recordsInDay.sort((a,b) => b.date.compareTo(a.date));
@@ -101,6 +103,17 @@ class _HomeTabState extends State<HomeTab> {
       if (result) {
         setState(() {});
       }
+    }
+  }
+
+  void _deleteRecord(Record record) async {
+
+    setState(() => _records.remove(record));
+
+    final res = await RecordRepository.delete(record);
+
+    if (res) {
+      print('Deleted');
     }
   }
   
