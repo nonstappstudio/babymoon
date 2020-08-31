@@ -54,6 +54,7 @@ class RecordTile extends StatelessWidget {
             ),
             Flexible(
               child: ListTile(
+                isThreeLine: true,
                 title: Text(
                 record.type.stringValue,
                 style: TextStyle(
