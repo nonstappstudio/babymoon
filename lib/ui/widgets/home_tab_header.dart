@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 
 class HomeTabHeader extends StatelessWidget {
 
+  final bool doShowTitle;
+
+  HomeTabHeader([this.doShowTitle]);
+
   final String _headerText = "Get to know your baby's sleep patterns and keep\n"
               "track of how much sleep they are getting here"; 
 
@@ -15,12 +19,16 @@ class HomeTabHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Space(20),
-          CircleAvatar(
-            backgroundColor: Theme.of(context).accentColor,
-            child: Icon(Icons.brightness_2, color: Colors.white),
+          RotatedBox(
+            quarterTurns: 90,
+            child: CircleAvatar(
+              radius: 30,
+              backgroundColor: Theme.of(context).accentColor,
+              child: Icon(Icons.brightness_2, color: Colors.white, size: 35),
+            ),
           ),
           Space(20),
-          Text(
+          if (doShowTitle) Text(
             _headerText,
             style: TextStyle(
               color: AppStyle.textColor,

@@ -14,6 +14,22 @@ class StatisticsTab extends StatelessWidget {
         child: Column(
           children: [
             CardLayout(
+              insidePadding: 16,
+              color: AppStyle.backgroundColor,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.check, size: 60,),
+                    )
+                  ],
+                ),
+              )
+            ),
+            CardLayout(
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(

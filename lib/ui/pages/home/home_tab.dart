@@ -73,7 +73,7 @@ class _HomeTabState extends State<HomeTab> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: <Widget>[
-          HomeTabHeader(),
+          HomeTabHeader(_records.isEmpty),
           Space(15),
           GradientButton(
             text: 'Add new sleeping record',

@@ -17,8 +17,8 @@ class _HomePageState extends State<HomePage> {
 
   Map<String, Widget> get _bottomItems => {
     'Home': Icon(Icons.home),
-    'Statistics': Icon(Icons.explore),
-    'Library': Icon(Icons.library_add),
+    'Statistics': Icon(Icons.insert_chart),
+    'Library': Icon(Icons.library_books),
     'Profile': Icon(Icons.person)
   };
 
