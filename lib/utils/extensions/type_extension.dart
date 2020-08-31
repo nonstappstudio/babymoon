@@ -1,5 +1,7 @@
 import 'package:babymoon/models/record.dart';
+import 'package:babymoon/ui/app_style.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 extension TypeString on SleepType {
   String get stringValue =>
@@ -9,4 +11,6 @@ extension TypeString on SleepType {
         .replaceAll('ights', "ight's").replaceAll('_', ' ');
 
   String get dbSafeString => describeEnum(this).toLowerCase();
+
+  Color get color => this == SleepType.NAP ? AppStyle.accentColor : Colors.blue;
 } 

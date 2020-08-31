@@ -14,6 +14,24 @@ class StatisticsTab extends StatelessWidget {
         child: Column(
           children: [
             CardLayout(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Icon(Icons.check_circle, color: Colors.green, size: 80),
+                    Space(24),
+                    Text(
+                      'Baby age: 12 months',
+                      style: TextStyles.whiteBoldText,
+                    ),
+                  ],
+                ),
+              ),
+              color: AppStyle.backgroundColor.withOpacity(0.6),
+              insidePadding: 16,
+            ),
+            Space(16),
+            CardLayout(
               child: Text(
                 'Overal sleep time',
                 style: TextStyles.mainWhite,
@@ -28,10 +46,7 @@ class StatisticsTab extends StatelessWidget {
                   flex: 1,
                   child: CardLayout(
                     child: Center(
-                      child: Text(
-                        'Data 1',
-                        style: TextStyles.mainWhite,
-                      )
+                      child: Text('data 1')
                     ),
                     color: AppStyle.backgroundColor.withOpacity(0.8),
                     insidePadding: 16,
