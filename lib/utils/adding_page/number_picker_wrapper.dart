@@ -30,17 +30,22 @@ class _NumberPickerWrapperState extends State<NumberPickerWrapper> {
   @override
   Widget build(BuildContext context) {
 
-    return NumberPicker.integer(
-      initialValue: currentValue,
-      minValue: 0,
-      maxValue: 59,
-      infiniteLoop: true,
-      onChanged: (num) {
-        setState(() {
-          currentValue = num;
-        });
-        widget.updateParent(num, widget.isHours);
-      },
+    return Theme(
+      data: Theme.of(context).copyWith(
+        accentColor: Colors.yellow[600]
+      ),
+      child: NumberPicker.integer(
+        initialValue: currentValue,
+        minValue: 0,
+        maxValue: 59,
+        infiniteLoop: true,
+        onChanged: (num) {
+          setState(() {
+            currentValue = num;
+          });
+          widget.updateParent(num, widget.isHours);
+        },
+      ),
     );
 
   }
