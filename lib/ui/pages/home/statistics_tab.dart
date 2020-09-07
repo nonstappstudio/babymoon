@@ -1,13 +1,29 @@
+import 'package:babymoon/models/record.dart';
 import 'package:babymoon/services/repositories/record_repository.dart';
 import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/text_styles.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/ui/widgets/circle_border_view.dart';
 import 'package:babymoon/ui/widgets/error_body.dart';
+import 'package:babymoon/utils/records_statistics.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';
 
-class StatisticsTab extends StatelessWidget {
+class StatisticsTab extends StatefulWidget {
+
+  @override
+  _StatisticsTabState createState() => _StatisticsTabState();
+}
+
+class _StatisticsTabState extends State<StatisticsTab> {
+
+  List<Record> records = [];
+
+  
+  @override
+  void initState() {
+    super.initState();
+  }
 
   Widget _content(BuildContext context) {
     return SingleChildScrollView(
@@ -30,7 +46,8 @@ class StatisticsTab extends StatelessWidget {
                     Space(12),
                     CircleBorderView(
                       child: Text(
-                        '8h 36m',
+                        '${RecordsStatistics
+                            .averageSleepDurationinMinutes(records)}',
                         textAlign: TextAlign.center,
                         style: TextStyles.cardContentStyle,
                       ),
@@ -102,21 +119,21 @@ class StatisticsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<List<Record>>(
       future: RecordRepository.getAllrecords(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          records = snapshot.data;
 
-          return ErrorBody(
-            errorText: 'Error while getting statistics',
-            onRefresh: () => print('Refresh'),
-          );
+          print(records.length);
+
+          return _content(context);
 
         } else if (snapshot.hasError) {
 
           return ErrorBody(
             errorText: 'Error while getting statistics',
-            onRefresh: () => print('Refresh'),
+            onRefresh: () => setState(() {print('refresh');})
           );
 
 

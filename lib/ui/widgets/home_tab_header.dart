@@ -23,7 +23,7 @@ class HomeTabHeader extends StatelessWidget {
             quarterTurns: 90,
             child: CircleAvatar(
               radius: 30,
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor: Colors.yellow[600],
               child: Icon(Icons.brightness_2, color: Colors.white, size: 35),
             ),
           ),

@@ -22,6 +22,8 @@ class Record {
     dateTime.day
   );
 
+  int get durationInMinutes => (duration.hour * 60) + duration.minute;
+
   factory Record.fromJson(Map<String, dynamic> json) {
     return Record(
       id: json['id'],
