@@ -4,28 +4,41 @@ class RecordsStatistics {
 
   static String averageSleepDuration(List<Record> records) {
 
-    int totalSleepTimeInMinutes = 0;
+    Duration total = Duration(minutes: 0);
 
     records.forEach((r) { 
-      totalSleepTimeInMinutes += r.durationInMinutes;
+      total += Duration(minutes: r.durationInMinutes);
     });
 
-    String avg = (totalSleepTimeInMinutes / 60).toStringAsFixed(2);
-    
-    return '${avg.split('.')[0]}h ${avg.split('.')[1]}m';
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(total.inMinutes.remainder(60));
+    return '${twoDigits(total.inHours)}h ${twoDigitMinutes}m';
+
   }
 
+  static String averageNightSleepDuration(List<Record> records) {
+
+    Duration total = Duration(minutes: 0);
+
+    records.where((r) => r.type == SleepType.NIGHTS_SLEEP).forEach((r) { 
+      total += Duration(minutes: r.durationInMinutes);
+    });
+
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(total.inMinutes.remainder(60));
+    return '${twoDigits(total.inHours)}h ${twoDigitMinutes}m';
+  }
 
   static String averageNapsDuration(List<Record> records) {
 
-    int totalNapsTimeInMinutes = 0;
+    Duration total = Duration(minutes: 0);
 
     records.where((r) => r.type == SleepType.NAP).forEach((r) { 
-      totalNapsTimeInMinutes += r.durationInMinutes;
+      total += Duration(minutes: r.durationInMinutes);
     });
 
-    String avg = (totalNapsTimeInMinutes / 60).toStringAsFixed(2);
-    
-    return '${avg.split('.')[0]}h ${avg.split('.')[1]}m';
+    String twoDigits(int n) => n.toString().padLeft(2, "0");
+    String twoDigitMinutes = twoDigits(total.inMinutes.remainder(60));
+    return '${twoDigits(total.inHours)}h ${twoDigitMinutes}m';
   }
 }

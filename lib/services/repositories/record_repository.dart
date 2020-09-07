@@ -9,6 +9,18 @@ class RecordRepository {
   static const String folderName = "records";
   static final recordsFolder = intMapStoreFactory.store(folderName);
 
+
+  static Future<List<Record>> getAllrecords() async {
+    final database = await AppDatabase.instance.database;
+
+    final recordSnapshot = await recordsFolder.find(database);
+
+    return recordSnapshot.map((snapshot){
+      final record = Record.fromJson(snapshot.value);
+      return record;
+    }).toList();
+  }
+
   static Future<bool> insertRecord(Record record) async {
 
     final database = await AppDatabase.instance.database;
@@ -22,7 +34,7 @@ class RecordRepository {
 
     final finder = Finder(filter: Filter.byKey(record.id));
     final result = await recordsFolder
-                        .update(await database, record.toJson(),finder: finder);
+                  .update(await database, record.toJson(),finder: finder);
 
     return result != null;
     
@@ -37,14 +49,10 @@ class RecordRepository {
     return result != null;
   }
 
-  static Future<List<Record>> getAllrecords() async {
-    final database = await AppDatabase.instance.database;
+  static Future<bool> deleteAllRecords(List<Record> records) async {
 
-    final recordSnapshot = await recordsFolder.find(database);
+    final result = await recordsFolder.delete(await database);
 
-    return recordSnapshot.map((snapshot){
-      final record = Record.fromJson(snapshot.value);
-      return record;
-    }).toList();
+    return result != null;
   }
 }

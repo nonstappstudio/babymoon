@@ -18,7 +18,6 @@ class StatisticsTab extends StatefulWidget {
 class _StatisticsTabState extends State<StatisticsTab> {
 
   List<Record> records = [];
-
   
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
           children: [
             CardLayout(
               insidePadding: 16,
-              color: Colors.white.withOpacity(0.8),
+              color: Colors.white.withOpacity(0.75),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -64,7 +63,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                   flex: 1,
                   child: CardLayout(
                     insidePadding: 16,
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withOpacity(0.75),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       child: Column(
@@ -79,7 +78,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                           CircleBorderView(
                             child: Text(
                               '${RecordsStatistics
-                              .averageSleepDuration(records)}',
+                              .averageNightSleepDuration(records)}',
                               textAlign: TextAlign.center,
                               style: TextStyles.cardContentStyle,
                             ),
@@ -94,7 +93,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                   flex: 1,
                   child: CardLayout(
                     insidePadding: 16,
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withOpacity(0.75),
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       child: Column(
