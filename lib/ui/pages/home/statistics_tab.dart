@@ -40,6 +40,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                   children: [
                     Text(
                       'Average sleep time per day',
+                      textAlign: TextAlign.center,
                       style: TextStyles.whiteBoldText
                             .copyWith(color: AppStyle.blueyColor),
                     ),
@@ -47,7 +48,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                     CircleBorderView(
                       child: Text(
                         '${RecordsStatistics
-                            .averageSleepDurationinMinutes(records)}',
+                        .averageSleepDuration(records)}',
                         textAlign: TextAlign.center,
                         style: TextStyles.cardContentStyle,
                       ),
@@ -56,58 +57,67 @@ class _StatisticsTabState extends State<StatisticsTab> {
                 ),
               )
             ),
-            CardLayout(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  children: [
-                    Icon(Icons.check_circle, color: Colors.green, size: 80),
-                    Space(24),
-                    Text(
-                      'Baby age: 12 months',
-                      style: TextStyles.whiteBoldText,
-                    ),
-                  ],
-                ),
-              ),
-              color: AppStyle.backgroundColor.withOpacity(0.6),
-              insidePadding: 16,
-            ),
-            Space(16),
-            CardLayout(
-              child: Text(
-                'Overal sleep time',
-                style: TextStyles.mainWhite,
-              ),
-              color: AppStyle.backgroundColor.withOpacity(0.8),
-              insidePadding: 16,
-            ),
-            Space(24),
+            Space(4),
             Row(
               children: [
                 Expanded(
                   flex: 1,
                   child: CardLayout(
-                    child: Center(
-                      child: Text('data 1')
-                    ),
-                    color: AppStyle.backgroundColor.withOpacity(0.8),
                     insidePadding: 16,
-                  )
+                    color: Colors.white.withOpacity(0.8),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Night's sleep",
+                            textAlign: TextAlign.center,
+                            style: TextStyles.whiteBoldText
+                                  .copyWith(color: AppStyle.blueyColor),
+                          ),
+                          Space(12),
+                          CircleBorderView(
+                            child: Text(
+                              '${RecordsStatistics
+                              .averageSleepDuration(records)}',
+                              textAlign: TextAlign.center,
+                              style: TextStyles.cardContentStyle,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ),
                 ),
-                Space(8),
+                Space(4),
                 Expanded(
                   flex: 1,
                   child: CardLayout(
-                    child: Center(
-                      child: Text(
-                        'Data 2',
-                        style: TextStyles.mainWhite,
-                      )
-                    ),
-                    color: AppStyle.backgroundColor.withOpacity(0.8),
                     insidePadding: 16,
-                  )
+                    color: Colors.white.withOpacity(0.8),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: [
+                          Text(
+                            'Naps',
+                            textAlign: TextAlign.center,
+                            style: TextStyles.whiteBoldText
+                                  .copyWith(color: AppStyle.blueyColor),
+                          ),
+                          Space(12),
+                          CircleBorderView(
+                            child: Text(
+                              '${RecordsStatistics
+                              .averageNapsDuration(records)}',
+                              textAlign: TextAlign.center,
+                              style: TextStyles.cardContentStyle,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ),
                 ),
               ],
             )
@@ -123,9 +133,8 @@ class _StatisticsTabState extends State<StatisticsTab> {
       future: RecordRepository.getAllrecords(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
+          
           records = snapshot.data;
-
-          print(records.length);
 
           return _content(context);
 
