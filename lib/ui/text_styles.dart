@@ -53,4 +53,11 @@ class TextStyles {
     color: AppStyle.unselectedColor,
     fontWeight: FontWeight.w300
   );
+
+  static TextStyle get cardTitleStyle => TextStyles.whiteBoldText
+      .copyWith(color: AppStyle.blueyColor);
+
+      
+  static TextStyle get cardContentStyle => TextStyles.mainWhite
+      .copyWith(color: AppStyle.blueyColor);
 }

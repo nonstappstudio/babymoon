@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   void _changePage(int index) {
     _pageController.animateToPage(
       index, 
-      duration: Duration(milliseconds: 300), 
+      duration: Duration(milliseconds: 150), 
       curve: Curves.easeInOut
     );
   }
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

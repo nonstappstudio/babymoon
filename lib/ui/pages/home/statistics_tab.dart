@@ -1,13 +1,15 @@
+import 'package:babymoon/services/repositories/record_repository.dart';
 import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/text_styles.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
+import 'package:babymoon/ui/widgets/circle_border_view.dart';
+import 'package:babymoon/ui/widgets/error_body.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';
 
 class StatisticsTab extends StatelessWidget {
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _content(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -15,15 +17,23 @@ class StatisticsTab extends StatelessWidget {
           children: [
             CardLayout(
               insidePadding: 16,
-              color: AppStyle.backgroundColor,
+              color: Colors.white.withOpacity(0.8),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.check, size: 60,),
+                    Text(
+                      'Average sleep time per day',
+                      style: TextStyles.whiteBoldText
+                            .copyWith(color: AppStyle.blueyColor),
+                    ),
+                    Space(12),
+                    CircleBorderView(
+                      child: Text(
+                        '8h 36m',
+                        textAlign: TextAlign.center,
+                        style: TextStyles.cardContentStyle,
+                      ),
                     )
                   ],
                 ),
@@ -87,6 +97,34 @@ class StatisticsTab extends StatelessWidget {
           ],
         ),
       ),
+    );
+  } 
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: RecordRepository.getAllrecords(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+
+          return ErrorBody(
+            errorText: 'Error while getting statistics',
+            onRefresh: () => print('Refresh'),
+          );
+
+        } else if (snapshot.hasError) {
+
+          return ErrorBody(
+            errorText: 'Error while getting statistics',
+            onRefresh: () => print('Refresh'),
+          );
+
+
+        }
+        return Center(
+          child: CircularProgressIndicator()
+        );
+      },
     );
   }
 }
