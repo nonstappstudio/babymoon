@@ -9,7 +9,6 @@ class RecordRepository {
   static const String folderName = "records";
   static final recordsFolder = intMapStoreFactory.store(folderName);
 
-
   static Future<List<Record>> getAllrecords() async {
     final database = await AppDatabase.instance.database;
 

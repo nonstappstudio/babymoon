@@ -10,6 +10,12 @@ class TextStyles {
      fontWeight: FontWeight.w300
   );
 
+  static TextStyle get errorStyle => TextStyle(
+     color: AppStyle.errorColor,
+     fontSize: 13,
+     fontWeight: FontWeight.w400
+  );
+
   static TextStyle get whiteBoldText => TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 15,
