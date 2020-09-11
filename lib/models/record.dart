@@ -8,12 +8,14 @@ class Record {
   final DateTime dateTime;
   final SleepType type;
   final TimeOfDay duration;
+  final int sortableDate;
 
   Record({
     this.id,
     this.dateTime,
     this.type,
-    this.duration
+    this.duration,
+    this.sortableDate
   });
 
   DateTime get comparableDate => DateTime(
@@ -30,7 +32,8 @@ class Record {
       dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
       type: SleepType.values
             .firstWhere((t) => describeEnum(t).toLowerCase() == json['type']),
-      duration: (json['duration'] as String).timeOfDay
+      duration: (json['duration'] as String).timeOfDay,
+      sortableDate: json['sortableDate']
     );
   }
 
@@ -39,6 +42,7 @@ class Record {
     'dateTime': dateTime.millisecondsSinceEpoch,
     'type': type.dbSafeString,
     'duration': duration.toJson,
+    'sortableDate': sortableDate
   };
 }
 

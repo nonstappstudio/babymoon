@@ -1,6 +1,7 @@
 import 'package:babymoon/models/record.dart';
 import 'package:sembast/sembast.dart';
 import '../app_database.dart';
+import 'package:babymoon/utils/extensions/all_extensions.dart';
 
 class RecordRepository {
 
@@ -13,6 +14,21 @@ class RecordRepository {
     final database = await AppDatabase.instance.database;
 
     final recordSnapshot = await recordsFolder.find(database);
+
+    return recordSnapshot.map((snapshot){
+      final record = Record.fromJson(snapshot.value);
+      return record;
+    }).toList();
+  }
+
+  static Future<List<Record>> getSpecificType(SleepType type) async {
+    final database = await AppDatabase.instance.database;
+
+    final finder = Finder(
+      filter: Filter.equals('type', type.dbSafeString)
+    );
+
+    final recordSnapshot = await recordsFolder.find(database, finder: finder);
 
     return recordSnapshot.map((snapshot){
       final record = Record.fromJson(snapshot.value);
@@ -48,7 +64,7 @@ class RecordRepository {
     return result != null;
   }
 
-  static Future<bool> deleteAllRecords(List<Record> records) async {
+  static Future<bool> deleteAllRecords() async {
 
     final result = await recordsFolder.delete(await database);
 

@@ -20,9 +20,12 @@ class StatisticsTab extends StatefulWidget {
 
 class _StatisticsTabState extends State<StatisticsTab> {
 
-  List<Record> records = [];
-  User user;
-  
+  User _user;
+
+  List<Record> _allRecords = [];
+  List<Record> _nightSleeps = [];
+  List<Record> _naps = [];
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +57,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                     child: Column(
                       children: [
                         Text(
-                          user.baby.name,
+                          _user.baby.name,
                           textAlign: TextAlign.center,
                           style: TextStyles.whiteBoldText
                                 .copyWith(color: AppStyle.blueyColor),
@@ -89,7 +92,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                     CircleBorderView(
                       child: Text(
                         '${RecordsStatistics
-                        .averageSleepDuration(records)}',
+                        .averageSleepDuration(_allRecords, 7)}',
                         textAlign: TextAlign.center,
                         style: TextStyles.cardContentStyle,
                       ),
@@ -120,7 +123,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                           CircleBorderView(
                             child: Text(
                               '${RecordsStatistics
-                              .averageNightSleepDuration(records)}',
+                              .averageFromRecords(_nightSleeps)}',
                               textAlign: TextAlign.center,
                               style: TextStyles.cardContentStyle,
                             ),
@@ -150,7 +153,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                           CircleBorderView(
                             child: Text(
                               '${RecordsStatistics
-                              .averageNapsDuration(records)}',
+                              .averageFromRecords(_naps)}',
                               textAlign: TextAlign.center,
                               style: TextStyles.cardContentStyle,
                             ),
@@ -172,15 +175,19 @@ class _StatisticsTabState extends State<StatisticsTab> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Future.wait([
+        UserRepository.getUser(),
         RecordRepository.getAllrecords(),
-        UserRepository.getUser()
+        RecordRepository.getSpecificType(SleepType.NIGHTS_SLEEP),
+        RecordRepository.getSpecificType(SleepType.NAP)
       ]),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           
-          records = snapshot.data[0];
+          _user = snapshot.data[0];
 
-          user = snapshot.data[1];
+          _allRecords = snapshot.data[1];
+          _nightSleeps = snapshot.data[2];
+          _naps = snapshot.data[3];
 
           return _content(context);
 
@@ -190,8 +197,6 @@ class _StatisticsTabState extends State<StatisticsTab> {
             errorText: 'Error while getting statistics',
             onRefresh: () => setState(() {print('refresh');})
           );
-
-
         }
         return Center(
           child: CircularProgressIndicator()

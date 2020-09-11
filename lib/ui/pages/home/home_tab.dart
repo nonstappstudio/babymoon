@@ -102,6 +102,7 @@ class _HomeTabState extends State<HomeTab> {
         setState(() {});
       }
     }
+    setState(() {});
   }
   
   @override

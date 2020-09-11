@@ -2,13 +2,15 @@ import 'package:babymoon/models/record.dart';
 
 class RecordsStatistics {
 
-  static String averageSleepDuration(List<Record> records) {
+  static String averageSleepDuration(List<Record> records, int daysPast) {
 
     int totalInMinutes = 0;
+    Map<DateTime, int> _sleepMinutesInDate = {};  
 
-    records.forEach((r) { 
-      totalInMinutes += r.durationInMinutes;
-    });
+  
+    // for (int i = 0; i < daysPast; i++) {
+    //   totalInMinutes += records[i].durationInMinutes;
+    // }
 
     //TODO: divide by days not records, because there are also naps
     totalInMinutes = (totalInMinutes / records.length).ceil();
@@ -34,16 +36,19 @@ class RecordsStatistics {
     return '${twoDigits(total.inHours)}h ${twoDigitMinutes}m';
   }
 
-  static String averageNapsDuration(List<Record> records) {
+  static String averageFromRecords(List<Record> records) {
 
-    Duration total = Duration(minutes: 0);
+    int total = 0;
 
-    records.where((r) => r.type == SleepType.NAP).forEach((r) { 
-      total += Duration(minutes: r.durationInMinutes);
+    records.forEach((r) { 
+      total += r.durationInMinutes;
     });
 
+    final avg = (total / records.length).ceil();
+    final duration = Duration(minutes: avg);
+
     String twoDigits(int n) => n.toString().padLeft(2, "0");
-    String twoDigitMinutes = twoDigits(total.inMinutes.remainder(60));
-    return '${twoDigits(total.inHours)}h ${twoDigitMinutes}m';
+    String twoDigitMinutes = twoDigits(avg.remainder(60));
+    return '${twoDigits(duration.inHours)}h ${twoDigitMinutes}m';
   }
 }

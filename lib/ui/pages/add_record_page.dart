@@ -97,7 +97,12 @@ class _AddRecordPageState extends State<AddRecordPage> {
                             Record(
                               dateTime: _date,
                               type: _type,
-                              duration: _duration
+                              duration: _duration,
+                              sortableDate: DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day
+                              ).millisecondsSinceEpoch
                             )
                           );
                         }
