@@ -1,22 +1,22 @@
-class DayTotal {
+class DayObj {
 
-  final int dateTime;
-  final int sleepDuration;
+  final int timestamp;
+  int sleepDuration;
 
-  DayTotal({
-    this.dateTime,
+  DayObj({
+    this.timestamp,
     this.sleepDuration
   });
 
-  factory DayTotal.fromJson(dynamic jsonObj) {
-    return DayTotal(
-      dateTime: jsonObj['dateTime'],
+  factory DayObj.fromJson(dynamic jsonObj) {
+    return DayObj(
+      timestamp: jsonObj['timestamp'],
       sleepDuration: jsonObj['sleepDuration']
     ); 
   }
 
   Map<String, dynamic> toJson() => {
-    'dateTime': dateTime,
+    'timestamp': timestamp,
     'sleepDuration': sleepDuration
   };
 }

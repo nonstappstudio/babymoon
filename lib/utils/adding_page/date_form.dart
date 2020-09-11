@@ -22,11 +22,19 @@ class _DateFormState extends State<DateForm> {
   DateFormat dateFormat = DateFormat("yyyy MMMM dd, HH:mm");
   DateTime currentValue = DateTime.now();
 
+  DateTime get lastWeek => DateTime(
+    DateTime.now().year,
+    DateTime.now().month,
+    DateTime.now().day - 7
+  );
+
   @override
   Widget build(BuildContext context) {
     return FormBuilderDateTimePicker(
       onChanged: (date) => currentValue = date,
       initialValue: DateTime.now(),
+      firstDate: lastWeek,
+      lastDate: DateTime.now(),
       attribute: 'date',
         style: TextStyles.formTextStyle,
         format: dateFormat,

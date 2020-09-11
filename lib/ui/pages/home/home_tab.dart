@@ -1,4 +1,6 @@
+import 'package:babymoon/models/day_total.dart';
 import 'package:babymoon/models/record.dart';
+import 'package:babymoon/services/repositories/day_repository.dart';
 import 'package:babymoon/services/repositories/record_repository.dart';
 import 'package:babymoon/ui/pages/add_record_page.dart';
 import 'package:babymoon/ui/text_styles.dart';
@@ -17,6 +19,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   List<Record> _records = [];
+  List<DayObj> _days = [];
 
   Widget _recordsList() {
 
@@ -79,6 +82,11 @@ class _HomeTabState extends State<HomeTab> {
             text: 'Add new sleeping record',
             function: _handleAddRecord,
           ),
+          Space(16),
+          GradientButton(
+            text: 'Clear records',
+            function: _clearRecords,
+          ),
           Space(20),
           _records.isNotEmpty ? _recordsList() :_emptyListDialog()
         ],
@@ -98,10 +106,35 @@ class _HomeTabState extends State<HomeTab> {
     if(record != null) {
       final result = await RecordRepository.insertRecord(record);
 
+      if (_days.isEmpty) {
+
+        await DayRepository.insertDay(DayObj(
+          timestamp: record.comparableDate.millisecondsSinceEpoch,
+          sleepDuration: record.durationInMinutes
+        ));
+
+      } else {
+        _days.forEach((d) async { 
+          print(d.timestamp);
+          print(record.comparableDate.millisecondsSinceEpoch);
+          print('--------separator--------');
+          if (d.timestamp == record.comparableDate.millisecondsSinceEpoch) {
+            d.sleepDuration += record.durationInMinutes;
+            print(d.sleepDuration);
+            await DayRepository.updateDay(d);
+          }
+        });
+      }
+
       if (result) {
         setState(() {});
       }
     }
+  }
+
+  void _clearRecords() async {
+    await RecordRepository.deleteAllRecords();
+    await DayRepository.deleteAllDays();
     setState(() {});
   }
   
@@ -113,10 +146,19 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: RecordRepository.getAllrecords(),
+      future: Future.wait([
+        RecordRepository.getAllrecords(),
+        DayRepository.getAllDays(3)
+      ]),      
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          _records = snapshot.data;
+          _records = snapshot.data[0];
+          _days = snapshot.data[1];
+          print(_days.length);
+          _days.forEach((d) { 
+            print('${DateTime.fromMillisecondsSinceEpoch(d.timestamp)}: '
+                  '${d.sleepDuration}');
+          });
           return _content;
         } else if (snapshot.hasError) {
           return Center(child: Text('${snapshot.error}'));
