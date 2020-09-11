@@ -1,5 +1,7 @@
+import 'package:babymoon/models/day.dart';
 import 'package:babymoon/models/record.dart';
 import 'package:babymoon/models/user.dart';
+import 'package:babymoon/services/repositories/day_repository.dart';
 import 'package:babymoon/services/repositories/record_repository.dart';
 import 'package:babymoon/services/repositories/user_repository.dart';
 import 'package:babymoon/ui/app_style.dart';
@@ -22,7 +24,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
 
   User _user;
 
-  List<Record> _allRecords = [];
+  List<DayObj> _days = [];
   List<Record> _nightSleeps = [];
   List<Record> _naps = [];
 
@@ -124,7 +126,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                     CircleBorderView(
                       child: Text(
                         '${RecordsStatistics
-                        .averageSleepDuration(_allRecords, 7)}',
+                        .averageSleepDuration(_days)}',
                         textAlign: TextAlign.center,
                         style: TextStyles.cardContentStyle,
                       ),
@@ -133,8 +135,8 @@ class _StatisticsTabState extends State<StatisticsTab> {
                 ),
               )
             ),
-            Space(4),
-            Row(
+            if (_naps.isNotEmpty && _nightSleeps.isNotEmpty) Space(4),
+            if (_naps.isNotEmpty && _nightSleeps.isNotEmpty) Row(
               children: [
                 Expanded(
                   flex: 1,
@@ -208,7 +210,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
     return FutureBuilder(
       future: Future.wait([
         UserRepository.getUser(),
-        RecordRepository.getAllrecords(),
+        DayRepository.getAllDays(0),
         RecordRepository.getSpecificType(SleepType.NIGHTS_SLEEP),
         RecordRepository.getSpecificType(SleepType.NAP)
       ]),
@@ -217,11 +219,11 @@ class _StatisticsTabState extends State<StatisticsTab> {
           
           _user = snapshot.data[0];
 
-          _allRecords = snapshot.data[1];
+          _days = snapshot.data[1];
           _nightSleeps = snapshot.data[2];
           _naps = snapshot.data[3];
 
-          return _allRecords.isEmpty
+          return _days.isEmpty
             ? _noStatistics
             : _content(context);
 

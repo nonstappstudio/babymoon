@@ -1,4 +1,4 @@
-import 'package:babymoon/models/day_total.dart';
+import 'package:babymoon/models/day.dart';
 import 'package:sembast/sembast.dart';
 import '../app_database.dart';
 

@@ -1,4 +1,4 @@
-import 'package:babymoon/models/day_total.dart';
+import 'package:babymoon/models/day.dart';
 import 'package:babymoon/models/record.dart';
 import 'package:babymoon/services/repositories/day_repository.dart';
 import 'package:babymoon/services/repositories/record_repository.dart';
@@ -88,7 +88,7 @@ class _HomeTabState extends State<HomeTab> {
             function: _clearRecords,
           ),
           Space(20),
-          _records.isNotEmpty ? _recordsList() : _emptyListDialog()
+          _records.isNotEmpty ? _recordsList() :_emptyListDialog()
         ],
       ),
     )
@@ -103,7 +103,28 @@ class _HomeTabState extends State<HomeTab> {
       ),
     );
 
-    if(record != null) {
+    if (record != null) {
+
+      final _dayExists = _days
+                        .any((d) => d.timestamp == record.comparableDate
+                        .millisecondsSinceEpoch);
+
+      if (_days.isEmpty || !_dayExists) {
+
+        await DayRepository.insertDay(DayObj(
+          timestamp: record.comparableDate.millisecondsSinceEpoch,
+          sleepDuration: record.durationInMinutes
+        ));
+
+      } else {
+        _days.forEach((d) async {
+          if (d.timestamp == record.comparableDate.millisecondsSinceEpoch) {
+            d.sleepDuration += record.durationInMinutes;
+            await DayRepository.updateDay(d);
+          }
+        });
+      }
+
       final result = await RecordRepository.insertRecord(record);
 
       if (result) {
@@ -134,7 +155,7 @@ class _HomeTabState extends State<HomeTab> {
         if (snapshot.hasData) {
           _records = snapshot.data[0];
           _days = snapshot.data[1];
-          
+          print(_days.length);
           return _content;
         } else if (snapshot.hasError) {
           return Center(child: Text('${snapshot.error}'));
