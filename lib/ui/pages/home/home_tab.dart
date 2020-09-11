@@ -88,7 +88,7 @@ class _HomeTabState extends State<HomeTab> {
             function: _clearRecords,
           ),
           Space(20),
-          _records.isNotEmpty ? _recordsList() :_emptyListDialog()
+          _records.isNotEmpty ? _recordsList() : _emptyListDialog()
         ],
       ),
     )
@@ -105,26 +105,6 @@ class _HomeTabState extends State<HomeTab> {
 
     if(record != null) {
       final result = await RecordRepository.insertRecord(record);
-
-      if (_days.isEmpty) {
-
-        await DayRepository.insertDay(DayObj(
-          timestamp: record.comparableDate.millisecondsSinceEpoch,
-          sleepDuration: record.durationInMinutes
-        ));
-
-      } else {
-        _days.forEach((d) async { 
-          print(d.timestamp);
-          print(record.comparableDate.millisecondsSinceEpoch);
-          print('--------separator--------');
-          if (d.timestamp == record.comparableDate.millisecondsSinceEpoch) {
-            d.sleepDuration += record.durationInMinutes;
-            print(d.sleepDuration);
-            await DayRepository.updateDay(d);
-          }
-        });
-      }
 
       if (result) {
         setState(() {});
@@ -154,11 +134,7 @@ class _HomeTabState extends State<HomeTab> {
         if (snapshot.hasData) {
           _records = snapshot.data[0];
           _days = snapshot.data[1];
-          print(_days.length);
-          _days.forEach((d) { 
-            print('${DateTime.fromMillisecondsSinceEpoch(d.timestamp)}: '
-                  '${d.sleepDuration}');
-          });
+          
           return _content;
         } else if (snapshot.hasError) {
           return Center(child: Text('${snapshot.error}'));
