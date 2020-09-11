@@ -95,6 +95,7 @@ class _AddRecordPageState extends State<AddRecordPage> {
                         } else {
                           Navigator.of(context).pop(
                             Record(
+                              id: _date.millisecondsSinceEpoch,
                               dateTime: _date,
                               type: _type,
                               duration: _duration,

@@ -155,7 +155,6 @@ class _HomeTabState extends State<HomeTab> {
         if (snapshot.hasData) {
           _records = snapshot.data[0];
           _days = snapshot.data[1];
-          print(_days.length);
           return _content;
         } else if (snapshot.hasError) {
           return Center(child: Text('${snapshot.error}'));
