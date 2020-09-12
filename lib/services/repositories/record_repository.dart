@@ -13,7 +13,9 @@ class RecordRepository {
   static Future<List<Record>> getAllrecords() async {
     final database = await AppDatabase.instance.database;
 
-    final recordSnapshot = await recordsFolder.find(database);
+    final finder = Finder(sortOrders: [SortOrder('dateTime', true)]);
+
+    final recordSnapshot = await recordsFolder.find(database, finder: finder);
 
     return recordSnapshot.map((snapshot){
       final record = Record.fromJson(snapshot.value);
