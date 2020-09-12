@@ -13,7 +13,6 @@ class RecordTile extends StatelessWidget {
   
   RecordTile({@required this.record});
 
-  //TODO: Do pluralization with locale (intl)
   String get _durationHours => record.duration.hour == 1 
     ? '${record.duration.hour} hour'
     : '${record.duration.hour} hours';

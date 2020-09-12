@@ -13,6 +13,7 @@ import 'package:babymoon/utils/assets.dart';
 import 'package:babymoon/utils/records_statistics.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xlider/flutter_xlider.dart';
 
 class StatisticsTab extends StatefulWidget {
 
@@ -27,6 +28,11 @@ class _StatisticsTabState extends State<StatisticsTab> {
   List<DayObj> _days = [];
   List<Record> _nightSleeps = [];
   List<Record> _naps = [];
+
+  int get _ageInMonths {
+    final age = _user.baby.age;
+    return (age.years / 12).ceil() + age.months;
+  }
 
   String get _ageDayString => _user.baby.age.days == 1
           ? '' 
@@ -58,9 +64,55 @@ class _StatisticsTabState extends State<StatisticsTab> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
+  Widget get _slider => FlutterSlider(
+    values: [RecordsStatistics.getProposedHours(_ageInMonths)],
+    min: 1,
+    max: 20,
+    disabled: true,
+    handler: FlutterSliderHandler(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppStyle.blueyColor
+      ),
+      child: Text(
+        '${RecordsStatistics.getProposedHours(_ageInMonths).ceil()}',
+        style: TextStyles.cardContentStyle.copyWith(color: AppStyle.accentColor)
+      )
+    ),
+    trackBar: FlutterSliderTrackBar(
+      activeDisabledTrackBarColor: AppStyle.unselectedColor,
+      inactiveDisabledTrackBarColor: AppStyle.unselectedColor,
+    ),
+  );
+
+  Widget _legendItem(String label, Color color) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 0,
+            child: Container(
+              height: 12,
+              width: 12,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: color
+              ),
+            )
+          ),
+          Space(12.0),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyles.cardContentStyle,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            )
+          )
+        ],
+      ),
+    );
   }
 
   Widget get _noStatistics => Center(
@@ -106,16 +158,20 @@ class _StatisticsTabState extends State<StatisticsTab> {
               color: Colors.white.withOpacity(0.75),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Flexible(
                     flex: 1,
-                    child: ImageIcon(
-                      Assets.baby,
-                      color: AppStyle.blueyColor,
-                      size: 54,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 24.0),
+                      child: ImageIcon(
+                        Assets.baby,
+                        color: AppStyle.blueyColor,
+                        size: 65,
+                      ),
                     ),
                   ),
+                  Space(16),
                   Flexible(
                     flex: 2,
                     child: Column(
@@ -123,16 +179,18 @@ class _StatisticsTabState extends State<StatisticsTab> {
                         Text(
                           _user.baby.name,
                           textAlign: TextAlign.center,
-                          style: TextStyles.whiteBoldText
-                                .copyWith(color: AppStyle.blueyColor),
+                          style: TextStyles.whiteBoldText.copyWith(
+                            color: AppStyle.blueyColor,
+                            fontSize: 21
+                          ),
                         ),
-                        Space(12),
+                        Space(4),
                         Text(
                           'Age: $_babyAge',
                           textAlign: TextAlign.center,
                           style: TextStyles.cardContentStyle,
                         ),
-                        Space(12),
+                        Space(2),
                         Text(
                           'Overal sleep condition: 9.6',
                           textAlign: TextAlign.center,
@@ -166,7 +224,13 @@ class _StatisticsTabState extends State<StatisticsTab> {
                         textAlign: TextAlign.center,
                         style: TextStyles.cardContentStyle,
                       ),
-                    )
+                    ),
+                    Space(16),
+                    _legendItem(
+                      'Proposed sleep duration for\n$_babyAge', 
+                      AppStyle.blueyColor
+                    ),
+                    _slider
                   ],
                 ),
               )
@@ -234,7 +298,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

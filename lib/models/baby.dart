@@ -12,8 +12,6 @@ class Baby {
   AgeDuration get age => Age
                   .dateDifference(fromDate: birthday, toDate: DateTime.now());
 
-  int get ageInMonths => age.months;
-
   factory Baby.fromJson(dynamic jsonObj) {
     return Baby(
       name: jsonObj['name'],
