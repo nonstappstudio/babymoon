@@ -28,11 +28,34 @@ class _StatisticsTabState extends State<StatisticsTab> {
   List<Record> _nightSleeps = [];
   List<Record> _naps = [];
 
-  // TODO: implement age string after intl pluralization
+  String get _ageDayString => _user.baby.age.days == 1
+          ? '' 
+          : '${_user.baby.age.days} days';
+
+  String get _ageMonthString => _user.baby.age.months == 1
+          ? '1 month'
+          : '${_user.baby.age.months} months';
+
+  String get _ageYearString => _user.baby.age.years == 1
+          ? '1 year'
+          : '${_user.baby.age.years} years';
+
   String get _babyAge {
     final age = _user.baby.age;
 
-    return '${age.months} months';
+    if (age.years == 0 && age.months == 0) {
+
+      // return just days
+      return _ageDayString == '' ? 'Baby born today :)' : _ageDayString;
+
+    } else if (age.years == 0) {
+
+      // return months and days
+      return '$_ageMonthString';
+
+    } else {
+      return '$_ageYearString $_ageMonthString';
+    }
   }
 
   @override
