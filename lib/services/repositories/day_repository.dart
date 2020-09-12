@@ -10,7 +10,7 @@ class DayRepository {
   static final daysFolder = intMapStoreFactory.store(folderName);
 
 
-  static Future<List<DayObj>> getAllDays(int limit) async {
+  static Future<List<DayObj>> getAllDays() async {
 
     final snapshot = await daysFolder.find(await database);
 

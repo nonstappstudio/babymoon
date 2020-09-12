@@ -1,3 +1,5 @@
+import 'package:age/age.dart';
+
 class Baby {
   final String name;
   final DateTime birthday;
@@ -6,6 +8,11 @@ class Baby {
     this.name,
     this.birthday
   });
+
+  AgeDuration get age => Age
+                  .dateDifference(fromDate: birthday, toDate: DateTime.now());
+
+  int get ageInMonths => age.months;
 
   factory Baby.fromJson(dynamic jsonObj) {
     return Baby(

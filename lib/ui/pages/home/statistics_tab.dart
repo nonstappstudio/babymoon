@@ -28,6 +28,13 @@ class _StatisticsTabState extends State<StatisticsTab> {
   List<Record> _nightSleeps = [];
   List<Record> _naps = [];
 
+  // TODO: implement age string after intl pluralization
+  String get _babyAge {
+    final age = _user.baby.age;
+
+    return '${age.months} months';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -95,6 +102,12 @@ class _StatisticsTabState extends State<StatisticsTab> {
                           textAlign: TextAlign.center,
                           style: TextStyles.whiteBoldText
                                 .copyWith(color: AppStyle.blueyColor),
+                        ),
+                        Space(12),
+                        Text(
+                          'Age: $_babyAge',
+                          textAlign: TextAlign.center,
+                          style: TextStyles.cardContentStyle,
                         ),
                         Space(12),
                         Text(
@@ -210,7 +223,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
     return FutureBuilder(
       future: Future.wait([
         UserRepository.getUser(),
-        DayRepository.getAllDays(0),
+        DayRepository.getAllDays(),
         RecordRepository.getSpecificType(SleepType.NIGHTS_SLEEP),
         RecordRepository.getSpecificType(SleepType.NAP)
       ]),

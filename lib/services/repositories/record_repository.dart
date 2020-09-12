@@ -10,10 +10,12 @@ class RecordRepository {
   static const String folderName = "records";
   static final recordsFolder = intMapStoreFactory.store(folderName);
 
-  static Future<List<Record>> getAllrecords() async {
+  static Future<List<Record>> getAllrecords(int limit) async {
     final database = await AppDatabase.instance.database;
 
-    final finder = Finder(sortOrders: [SortOrder('dateTime', true)]);
+    Finder finder = Finder(
+      sortOrders: [SortOrder('dateTime', true)],
+    );
 
     final recordSnapshot = await recordsFolder.find(database, finder: finder);
 
@@ -49,7 +51,7 @@ class RecordRepository {
 
   static Future<bool> updateRecord(Record record) async {
 
-    final finder = Finder(filter: Filter.byKey(record.id));
+    final finder = Finder(filter: Filter.equals('id', record.id));
     final result = await recordsFolder
                   .update(await database, record.toJson(),finder: finder);
 

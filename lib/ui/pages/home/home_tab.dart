@@ -148,8 +148,8 @@ class _HomeTabState extends State<HomeTab> {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: Future.wait([
-        RecordRepository.getAllrecords(),
-        DayRepository.getAllDays(3)
+        RecordRepository.getAllrecords(50),
+        DayRepository.getAllDays()
       ]),      
       builder: (context, snapshot) {
         if (snapshot.hasData) {
