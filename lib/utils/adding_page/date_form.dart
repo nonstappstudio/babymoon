@@ -19,7 +19,7 @@ class DateForm extends StatefulWidget {
 
 class _DateFormState extends State<DateForm> {
 
-  DateFormat dateFormat = DateFormat("yyyy MMMM dd, HH:mm");
+  DateFormat dateFormat = DateFormat("yyyy MMMM dd, h:mm a");
   DateTime currentValue = DateTime.now();
 
   DateTime get lastWeek => DateTime(

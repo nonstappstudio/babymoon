@@ -75,10 +75,7 @@ class RecordsInDate extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               itemCount: records.length,
               itemBuilder: (context, index) {
-
                 final record = records[index];
-
-                records.sort((a, b) => b.dateTime.compareTo(a.dateTime));
 
                 return RecordTile(record: record);
               }
