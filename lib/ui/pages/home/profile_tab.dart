@@ -1,8 +1,11 @@
 import 'package:babymoon/models/user.dart';
 import 'package:babymoon/services/repositories/user_repository.dart';
+import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/ui/widgets/error_body.dart';
 import 'package:babymoon/utils/notifications_helper.dart';
+import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 import '../../app_style.dart';
 import '../../text_styles.dart';
@@ -15,6 +18,8 @@ class ProfileTab extends StatefulWidget {
 
 class _ProfileTabState extends State<ProfileTab> {
 
+  static final _switchKey = GlobalKey<FormBuilderState>();
+
   User _user;
 
   bool _notifications;
@@ -22,24 +27,63 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget get _healthySleep => SwitchListTile(
     value: _notifications,
     title: Text(
-      'Healthy sleep -\nsleep time reminders',
+      'Healthy sleep',
       style: TextStyles.main.copyWith(
         fontSize: 16, 
         color: AppStyle.accentColor,
-        fontWeight: FontWeight.w200
+        fontWeight: FontWeight.w400
       ),
     ),
     activeColor: AppStyle.accentColor,
-    onChanged: (value) => _onRemindersChanged()
+    onChanged: (value) => _onRemindersChanged(value)
   );
 
-  Widget get _content => SingleChildScrollView(
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        children: [
-          _healthySleep
-        ],
+  Widget get _content => Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      children: [
+        _notificationPreferences
+      ],
+    ),
+  );
+
+  Widget get _notificationPreferences => SingleChildScrollView(
+    child: CardLayout(
+      color: AppStyle.backgroundColor.withOpacity(0.7),
+      insidePadding: 16,
+      child: FormBuilder(
+        key: _switchKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Icon(
+                Icons.notifications_active, 
+                color: AppStyle.accentColor, 
+                size: 54
+              )
+            ),
+            Space(16),
+            Center(
+              child: Text(
+                'Healthy sleep',
+                style: TextStyles.appBarStyle.copyWith(fontSize: 26),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Space(24),
+            Text(
+              "Get proposed sleep time reminders based on your baby's age"
+              " \n&\nprofessional doctors",
+              style: TextStyles.appBarStyle
+                  .copyWith(fontSize: 18, fontWeight: FontWeight.w200),
+              textAlign: TextAlign.center,
+            ),
+            Space(8),
+            _healthySleep
+          ],
+        ),
       ),
     ),
   );
@@ -48,8 +92,8 @@ class _ProfileTabState extends State<ProfileTab> {
     setState(() {});
   }
 
-  void _onRemindersChanged() async {
-    if (_notifications) {
+  void _onRemindersChanged(bool value) async {
+    if (!value) {
       final permissionStatus = await NotificationPermissions
           .getNotificationPermissionStatus();
 
@@ -66,6 +110,9 @@ class _ProfileTabState extends State<ProfileTab> {
         date: DateTime.now().add(Duration(seconds: 5))
       );
     }
+    _user.notificationsEnabled = _notifications;
+    UserRepository.updateUser(_user);
+    setState(() {});
   }
 
   Future<bool> _requestPermission() async {
@@ -87,9 +134,15 @@ class _ProfileTabState extends State<ProfileTab> {
     }
   }
 
+  void _initializeNotifications() async {
+    final user = await UserRepository.getUser();
+
+    setState(() => _notifications = user.notificationsEnabled);
+  }
+
   @override
   void initState() {
-    _notifications = false;
+    _initializeNotifications();
     super.initState();
   }
 
@@ -101,8 +154,6 @@ class _ProfileTabState extends State<ProfileTab> {
         if (snapshot.hasData) {
 
           _user = snapshot.data;
-
-          _notifications = _user.notificationsEnabled;
 
           return _content;
 

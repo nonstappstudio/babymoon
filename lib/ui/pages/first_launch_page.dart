@@ -262,8 +262,6 @@ class FirstLaunchPage extends StatelessWidget {
     if (_controller.page == 3) {
       //save
     } else if (_controller.page == 2) {
-      final bool notifications = _switchKey.currentState
-                            .fields['notifications'].currentState.value;
 
       final user = User(
           baby: Baby(
@@ -273,8 +271,7 @@ class FirstLaunchPage extends StatelessWidget {
           cashCount: 0,
           id: DateTime.now().millisecondsSinceEpoch,
           isPremium: false,
-          notificationsEnabled: notifications 
-              && await _permissionVariable
+          notificationsEnabled: await _permissionVariable
         );
 
       final result = await UserRepository.insertUser(user);
