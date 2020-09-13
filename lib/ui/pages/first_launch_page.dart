@@ -8,6 +8,7 @@ import 'package:babymoon/utils/assets.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:notification_permissions/notification_permissions.dart' as np;
 import 'package:permission_handler/permission_handler.dart';
 import '../app_style.dart';
 
@@ -190,7 +191,7 @@ class FirstLaunchPage extends StatelessWidget {
                 border: InputBorder.none
               ),
               activeColor: AppStyle.accentColor,
-              onChanged: null
+              onChanged: (value) => _onRemindersChanged(value)
             ),
           ),
         ],
@@ -209,7 +210,53 @@ class FirstLaunchPage extends StatelessWidget {
     );
   }
 
+  void _onRemindersChanged(bool value) async {
+    if (!value) {
+      await np.NotificationPermissions
+          .getNotificationPermissionStatus();
+    } else {
+      await _requestPermission();
+    }
+  }
+
+  Future<bool> _requestPermission() async {
+    final permissionStatus = await np.NotificationPermissions
+                  .getNotificationPermissionStatus();
+
+    if (permissionStatus != np.PermissionStatus.granted) {
+
+      final bool _openSettings = permissionStatus == np.PermissionStatus.denied;
+
+      final result = await np.NotificationPermissions
+          .requestNotificationPermissions(openSettings: _openSettings);
+
+      return result == np.PermissionStatus.granted;
+    } else if (permissionStatus == np.PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   bool get _validateForm => _fbKey.currentState.validate();
+
+  Future<bool> get _permissionVariable async {
+    final permissionStatus = await np.NotificationPermissions
+          .getNotificationPermissionStatus();
+    
+    if (permissionStatus == np.PermissionStatus.denied) {
+
+      await np.NotificationPermissions.requestNotificationPermissions();
+      return await np.NotificationPermissions
+        .getNotificationPermissionStatus() == np.PermissionStatus.granted;
+
+    } else {
+
+      await Permission.notification.request();
+      return await Permission.notification.status == PermissionStatus.granted;
+
+    }
+  }
 
   void _forward(BuildContext context) async {
     if (_controller.page == 3) {
@@ -227,7 +274,7 @@ class FirstLaunchPage extends StatelessWidget {
           id: DateTime.now().millisecondsSinceEpoch,
           isPremium: false,
           notificationsEnabled: notifications 
-              && await Permission.notification.request().isGranted
+              && await _permissionVariable
         );
 
       final result = await UserRepository.insertUser(user);
@@ -239,7 +286,6 @@ class FirstLaunchPage extends StatelessWidget {
           )
         );
       }
-      
 
     } else if (_controller.page == 1) {
 

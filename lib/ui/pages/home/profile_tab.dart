@@ -3,9 +3,7 @@ import 'package:babymoon/services/repositories/user_repository.dart';
 import 'package:babymoon/ui/widgets/error_body.dart';
 import 'package:babymoon/utils/notifications_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:notification_permissions/notification_permissions.dart';
-import '../../../main.dart';
 import '../../app_style.dart';
 import '../../text_styles.dart';
 
@@ -24,7 +22,7 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget get _healthySleep => SwitchListTile(
     value: _notifications,
     title: Text(
-      'Sleep time reminder',
+      'Healthy sleep -\nsleep time reminders',
       style: TextStyles.main.copyWith(
         fontSize: 16, 
         color: AppStyle.accentColor,
@@ -103,6 +101,8 @@ class _ProfileTabState extends State<ProfileTab> {
         if (snapshot.hasData) {
 
           _user = snapshot.data;
+
+          _notifications = _user.notificationsEnabled;
 
           return _content;
 
