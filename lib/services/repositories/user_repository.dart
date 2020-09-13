@@ -28,7 +28,7 @@ class UserRepository {
 
   static Future<bool> updateUser(User user) async {
 
-    final finder = Finder(filter: Filter.byKey(user.id));
+    final finder = Finder(filter: Filter.equals('id', user.id));
     final result = await usersFolder
                   .update(await database, user.toJson(),finder: finder);
 

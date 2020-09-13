@@ -60,7 +60,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
       return '$_ageMonthString';
 
     } else {
-      return '$_ageYearString $_ageMonthString';
+      return '$_ageYearString & $_ageMonthString';
     }
   }
 
@@ -158,12 +158,13 @@ class _StatisticsTabState extends State<StatisticsTab> {
               color: Colors.white.withOpacity(0.75),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                
                 children: [
                   Flexible(
                     flex: 1,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 24.0),
+                      padding: const EdgeInsets.only(left: 48.0),
                       child: ImageIcon(
                         Assets.baby,
                         color: AppStyle.blueyColor,
@@ -171,10 +172,11 @@ class _StatisticsTabState extends State<StatisticsTab> {
                       ),
                     ),
                   ),
-                  Space(16),
-                  Flexible(
-                    flex: 2,
+                  Space(24),
+                  Expanded(
+                    flex: 1,
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           _user.baby.name,
@@ -187,12 +189,6 @@ class _StatisticsTabState extends State<StatisticsTab> {
                         Space(4),
                         Text(
                           'Age: $_babyAge',
-                          textAlign: TextAlign.center,
-                          style: TextStyles.cardContentStyle,
-                        ),
-                        Space(2),
-                        Text(
-                          'Overal sleep condition: 9.6',
                           textAlign: TextAlign.center,
                           style: TextStyles.cardContentStyle,
                         ),
@@ -227,7 +223,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
                     ),
                     Space(16),
                     _legendItem(
-                      'Proposed sleep duration for\n$_babyAge', 
+                      'Proposed sleep duration for\n$_babyAge old babies', 
                       AppStyle.blueyColor
                     ),
                     _slider
@@ -304,6 +300,11 @@ class _StatisticsTabState extends State<StatisticsTab> {
       ),
     );
   } 
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
