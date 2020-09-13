@@ -19,8 +19,6 @@ class _ProfileTabState extends State<ProfileTab> {
 
   User _user;
 
-  bool _hasChanged;
-
   bool _notifications;
 
   Widget get _healthySleep => SwitchListTile(
@@ -53,8 +51,14 @@ class _ProfileTabState extends State<ProfileTab> {
   }
 
   void _onRemindersChanged() async {
-    _hasChanged = true;
     if (_notifications) {
+      final permissionStatus = await NotificationPermissions
+          .getNotificationPermissionStatus();
+
+      if (permissionStatus == PermissionStatus.granted) {
+        NotificationsHelper.cancelAllNotifications();
+      }
+
       setState(() => _notifications = false);
     } else {
       if (await _requestPermission()) setState(() => _notifications = true);
@@ -87,7 +91,6 @@ class _ProfileTabState extends State<ProfileTab> {
 
   @override
   void initState() {
-    _hasChanged = false;
     _notifications = false;
     super.initState();
   }

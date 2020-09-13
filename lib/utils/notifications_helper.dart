@@ -21,11 +21,15 @@ class NotificationsHelper {
         presentSound: true);
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.schedule(
+    await flutterLocalNotificationsPlugin.showDailyAtTime(
         0,
         title,
         message,
-        date,
+        Time(date.hour, date.minute, date.second),
         platformChannelSpecifics);
+  }
+
+  static void cancelAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
   }
 }
