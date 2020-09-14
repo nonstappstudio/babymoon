@@ -88,29 +88,13 @@ class _StatisticsTabState extends State<StatisticsTab> {
   Widget _legendItem(String label, Color color) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 0,
-            child: Container(
-              height: 12,
-              width: 12,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color
-              ),
-            )
-          ),
-          Space(12.0),
-          Expanded(
-            child: Text(
-              label,
-              style: TextStyles.cardContentStyle,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            )
-          )
-        ],
+      child: Text(
+        label,
+        style: TextStyles.cardContentStyle
+              .copyWith(color: AppStyle.accentColor),
+        maxLines: 2,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
@@ -160,11 +144,11 @@ class _StatisticsTabState extends State<StatisticsTab> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            BabyCard(_user.baby, false),
+            BabyCard(_user.baby, true),
             Space(8.0),
             CardLayout(
               insidePadding: 16,
-              color: Colors.white.withOpacity(0.75),
+              color: AppStyle.backgroundColor.withOpacity(0.7),
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Column(
@@ -173,90 +157,90 @@ class _StatisticsTabState extends State<StatisticsTab> {
                       'Average sleep time per day',
                       textAlign: TextAlign.center,
                       style: TextStyles.whiteBoldText
-                            .copyWith(color: AppStyle.blueyColor),
+                            .copyWith(color: AppStyle.accentColor),
                     ),
                     Space(12),
                     CircleBorderView(
+                      color: AppStyle.accentColor,
                       child: Text(
                         '${RecordsStatistics
                         .averageSleepDuration(_days)}',
                         textAlign: TextAlign.center,
-                        style: TextStyles.cardContentStyle,
+                        style: TextStyles.cardContentStyle
+                                .copyWith(color: AppStyle.accentColor),
                       ),
                     ),
                     Space(16),
                     _legendItem(
                       'Proposed sleep duration for\n$_babyAge old babies', 
-                      AppStyle.blueyColor
+                      AppStyle.accentColor
                     ),
                     _slider
                   ],
                 ),
               )
             ),
-            if (_naps.isNotEmpty && _nightSleeps.isNotEmpty) Space(4),
-            if (_naps.isNotEmpty && _nightSleeps.isNotEmpty) Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: CardLayout(
-                    insidePadding: 16,
-                    color: Colors.white.withOpacity(0.75),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        children: [
-                          Text(
-                            "Night's sleep",
-                            textAlign: TextAlign.center,
-                            style: TextStyles.whiteBoldText
-                                  .copyWith(color: AppStyle.blueyColor),
-                          ),
-                          Space(12),
-                          CircleBorderView(
-                            child: Text(
-                              '${RecordsStatistics
-                              .averageFromRecords(_nightSleeps)}',
-                              textAlign: TextAlign.center,
-                              style: TextStyles.cardContentStyle,
-                            ),
-                          )
-                        ],
+            if (_nightSleeps.isNotEmpty) Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: CardLayout(
+                insidePadding: 16,
+                color: AppStyle.backgroundColor.withOpacity(0.7),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Text(
+                        "Average night's sleep time",
+                        textAlign: TextAlign.center,
+                        style: TextStyles.whiteBoldText
+                              .copyWith(color: AppStyle.accentColor),
                       ),
-                    )
+                      Space(12),
+                      CircleBorderView(
+                        color: AppStyle.accentColor,
+                        child: Text(
+                          '${RecordsStatistics
+                          .averageFromRecords(_nightSleeps)}',
+                          textAlign: TextAlign.center,
+                          style: TextStyles.cardContentStyle
+                                .copyWith(color: AppStyle.accentColor),
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                Space(4),
-                Expanded(
-                  flex: 1,
-                  child: CardLayout(
-                    insidePadding: 16,
-                    color: Colors.white.withOpacity(0.75),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Naps',
-                            textAlign: TextAlign.center,
-                            style: TextStyles.whiteBoldText
-                                  .copyWith(color: AppStyle.blueyColor),
-                          ),
-                          Space(12),
-                          CircleBorderView(
-                            child: Text(
-                              '${RecordsStatistics
-                              .averageFromRecords(_naps)}',
-                              textAlign: TextAlign.center,
-                              style: TextStyles.cardContentStyle,
-                            ),
-                          )
-                        ],
+                )
+              ),
+            ),
+            if (_naps.isNotEmpty) Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: CardLayout(
+                insidePadding: 16,
+                color: AppStyle.backgroundColor.withOpacity(0.7),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    children: [
+                      Text(
+                        'Average nap time',
+                        textAlign: TextAlign.center,
+                        style: TextStyles.whiteBoldText
+                              .copyWith(color: AppStyle.accentColor),
                       ),
-                    )
+                      Space(12),
+                      CircleBorderView(
+                        color: AppStyle.accentColor,
+                        child: Text(
+                          '${RecordsStatistics
+                          .averageFromRecords(_naps)}',
+                          textAlign: TextAlign.center,
+                          style: TextStyles.cardContentStyle
+                                  .copyWith(color: AppStyle.accentColor),
+                        ),
+                      )
+                    ],
                   ),
-                ),
-              ],
+                )
+              ),
             ),
           ],
         ),

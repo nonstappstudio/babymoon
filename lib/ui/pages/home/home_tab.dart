@@ -13,6 +13,7 @@ import 'package:babymoon/utils/space.dart';
 import 'package:babymoon/ui/widgets/gradient_button.dart';
 import 'package:babymoon/ui/widgets/records_in_date.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../app_style.dart';
 
@@ -99,16 +100,15 @@ class _HomeTabState extends State<HomeTab> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(80.0)
                 ),
-                color: AppStyle.backgroundColor.withOpacity(0.2),
+                color: AppStyle.backgroundColor.withOpacity(0.35),
                 padding: EdgeInsets.all(0.0),
                 child: Container(
                   alignment: Alignment.center,
                   child: Text(
                     'Clear all records',
                     textAlign: TextAlign.center,
-                    style: TextStyles.buttonTextStyle.copyWith(
-                      color: Colors.red[400].withOpacity(0.8)
-                    )
+                    style: TextStyles.buttonTextStyle
+                      .copyWith(color: AppStyle.accentColor.withOpacity(0.85)), 
                   ),
                 ),
               ),
@@ -169,7 +169,7 @@ class _HomeTabState extends State<HomeTab> {
 
     final months = (user.baby.age.years / 12).ceil() + user.baby.age.months;
 
-    if (user.notificationsEnabled) {
+    if (user.notificationsEnabled && await Permission.notification.isGranted) {
       NotificationsHelper.scheduleNotification(
         title: 'Healthy sleep',
         message: "It's perfect time for your baby to go sleep",
