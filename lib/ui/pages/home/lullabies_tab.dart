@@ -41,28 +41,42 @@ class _LullabiesTabState extends State<LullabiesTab> {
 
   StreamSubscription _positionSubscription;
 
+  bool _isLoop;
+
+  bool _isLoopOne;
+  
+
   Widget get _playerController => CardLayout(
     insidePadding: 16.0,
     color: AppStyle.backgroundColor.withOpacity(0.7),
     child: Row(
       children: [
-        Flexible(
-          flex: 1,
-          child: IconButton(
-            onPressed: () {
-              audioPlayer.state == AudioPlayerState.PLAYING
-                ? _pause()
-                : _play();
-            },
-            icon: Icon(
-              audioPlayer.state == AudioPlayerState.PLAYING
-                ? Icons.pause
-                : Icons.play_arrow, 
-              color: AppStyle.accentColor, 
-              size: 48
-            ),
-          ),
-        ),
+        // IconButton(
+        //   onPressed: () {
+        //     audioPlayer.state == AudioPlayerState.PLAYING
+        //       ? _pause()
+        //       : _play();
+        //   },
+        //   icon: Builder(
+        //     builder: (c) {
+
+        //       IconData iconData;
+
+        //       if (audioPlayer.state == AudioPlayerState.PLAYING) {
+        //         iconData = Icons.pause;
+        //       } else if (audioPlayer.state == AudioPlayerState.PAUSED) {
+        //         iconData = Icons.play_arrow;
+        //       } else if (audioPlayer.state == AudioPlayerState.COMPLETED) {
+        //         iconData = Icons.play_arrow;
+        //       } else {
+        //         iconData = Icons.play_arrow;
+        //       }
+
+        //       return Icon(iconData, color: AppStyle.accentColor, size: 48);
+
+        //     },
+        //   )
+        // ),
         if (_isInitialized) Flexible(
           flex: 4,
           child: Slider(
@@ -79,8 +93,19 @@ class _LullabiesTabState extends State<LullabiesTab> {
   );
 
   void _initializePositionSubscription() {
-    _positionSubscription = audioPlayer.onAudioPositionChanged
-          .listen((p) => setState(() => _position = p));
+    _positionSubscription = audioPlayer.onAudioPositionChanged.listen((p) {
+      setState(() {
+        _position = p;
+        if (p.inSeconds >= audioPlayer.duration.inSeconds) {
+          if (_isLoop ) {
+            _currentLullaby += 1;
+            _play();
+          } else if (_isLoop) {
+            
+          } 
+        }
+      });
+    });
   }
 
   void _play() async {
@@ -90,6 +115,11 @@ class _LullabiesTabState extends State<LullabiesTab> {
 
   void _pause() async {
     await audioPlayer.pause();
+    setState(() {});
+  }
+
+  void _stop() async {
+    await audioPlayer.stop();
     setState(() {});
   }
 
@@ -105,6 +135,8 @@ class _LullabiesTabState extends State<LullabiesTab> {
 
   @override
   void initState() {
+    _isLoop = false;
+    _isLoopOne = false;
     _initializePositionSubscription();
     _currentLullaby = 0;
     super.initState();
