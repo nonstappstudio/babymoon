@@ -14,6 +14,8 @@ import 'package:babymoon/ui/widgets/gradient_button.dart';
 import 'package:babymoon/ui/widgets/records_in_date.dart';
 import 'package:flutter/material.dart';
 
+import '../../app_style.dart';
+
 class HomeTab extends StatefulWidget {
 
   @override
@@ -85,13 +87,33 @@ class _HomeTabState extends State<HomeTab> {
             text: 'Add new sleeping record',
             function: _handleAddRecord,
           ),
-          Space(16),
-          GradientButton(
-            text: 'Clear records',
-            function: _clearRecords,
-          ),
           Space(20),
-          _records.isNotEmpty ? _recordsList() :_emptyListDialog()
+          _records.isNotEmpty ? _recordsList() :_emptyListDialog(),
+          if (_records.length > 2) Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Container(
+              height: 40.0,
+              width: MediaQuery.of(context).size.width - 80,
+              child: RaisedButton(
+                onPressed: () => _clearRecords(),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(80.0)
+                ),
+                color: AppStyle.backgroundColor.withOpacity(0.2),
+                padding: EdgeInsets.all(0.0),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Clear all records',
+                    textAlign: TextAlign.center,
+                    style: TextStyles.buttonTextStyle.copyWith(
+                      color: Colors.red[400].withOpacity(0.8)
+                    )
+                  ),
+                ),
+              ),
+            )
+          )
         ],
       ),
     )
@@ -173,6 +195,7 @@ class _HomeTabState extends State<HomeTab> {
         if (snapshot.hasData) {
           _records = snapshot.data[0];
           _days = snapshot.data[1];
+          
           return _content;
         } else if (snapshot.hasError) {
           return Center(child: Text('${snapshot.error}'));

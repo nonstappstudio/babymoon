@@ -10,7 +10,6 @@ import 'package:babymoon/ui/widgets/baby_card.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/ui/widgets/circle_border_view.dart';
 import 'package:babymoon/ui/widgets/error_body.dart';
-import 'package:babymoon/utils/assets.dart';
 import 'package:babymoon/utils/records_statistics.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';

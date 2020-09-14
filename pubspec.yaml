@@ -21,7 +21,6 @@ dependencies:
   age: ^0.0.1
   flutter_xlider: ^3.4.0
   flutter_local_notifications: ^1.4.4+4
-  rxdart: ^0.23.1
   notification_permissions: ^0.4.7
 
 dev_dependencies:
