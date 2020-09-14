@@ -1,5 +1,6 @@
 import 'package:babymoon/models/user.dart';
 import 'package:babymoon/services/repositories/user_repository.dart';
+import 'package:babymoon/ui/widgets/baby_card.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/ui/widgets/error_body.dart';
 import 'package:babymoon/utils/notifications_helper.dart';
@@ -41,6 +42,8 @@ class _ProfileTabState extends State<ProfileTab> {
     padding: const EdgeInsets.all(16.0),
     child: Column(
       children: [
+        BabyCard(_user.baby, true),
+        Space(8),
         _notificationPreferences
       ],
     ),

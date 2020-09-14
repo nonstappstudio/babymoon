@@ -122,7 +122,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BabyCard(_user.baby),
+          BabyCard(_user.baby, false),
           Space(8.0),
           CardLayout(
             insidePadding: 24,
@@ -161,7 +161,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            BabyCard(_user.baby),
+            BabyCard(_user.baby, false),
             Space(8.0),
             CardLayout(
               insidePadding: 16,

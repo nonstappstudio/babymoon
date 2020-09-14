@@ -9,8 +9,9 @@ import 'card_layout.dart';
 class BabyCard extends StatelessWidget {
 
   final Baby baby;
+  final bool isDarkTheme;
 
-  BabyCard([this.baby]);
+  BabyCard([this.baby, this.isDarkTheme]);
 
     String get _ageDayString => baby.age.days == 1
           ? '1 day' 
@@ -46,7 +47,9 @@ class BabyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CardLayout(
       insidePadding: 16,
-      color: Colors.white.withOpacity(0.75),
+      color: isDarkTheme
+        ? AppStyle.backgroundColor.withOpacity(0.7)
+        : Colors.white.withOpacity(0.75),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +60,7 @@ class BabyCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 48.0),
               child: ImageIcon(
                 Assets.baby,
-                color: AppStyle.blueyColor,
+                color: isDarkTheme ? AppStyle.accentColor : AppStyle.blueyColor,
                 size: 65,
               ),
             ),
@@ -72,7 +75,9 @@ class BabyCard extends StatelessWidget {
                   baby.name,
                   textAlign: TextAlign.start,
                   style: TextStyles.whiteBoldText.copyWith(
-                    color: AppStyle.blueyColor,
+                    color: isDarkTheme 
+                      ? AppStyle.accentColor 
+                      : AppStyle.blueyColor,
                     fontSize: 21
                   ),
                 ),
@@ -81,7 +86,11 @@ class BabyCard extends StatelessWidget {
                   'Age: $_babyAge',
                   maxLines: 2,
                   textAlign: TextAlign.start,
-                  style: TextStyles.cardContentStyle,
+                  style: TextStyles.cardContentStyle.copyWith(
+                    color: isDarkTheme 
+                      ? AppStyle.accentColor 
+                      : AppStyle.blueyColor,
+                  ),
                 ),
               ],
             ),
