@@ -1,5 +1,6 @@
 import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/pages/home/home_tab.dart';
+import 'package:babymoon/ui/pages/home/lullabies_tab.dart';
 import 'package:babymoon/ui/pages/home/profile_tab.dart';
 import 'package:babymoon/ui/pages/home/statistics_tab.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             HomeTab(),
             StatisticsTab(),
-            Container(color: Colors.transparent, child: Center(child: Text('L'))),
+            LullabiesTab(),
             ProfileTab()
           ],
         ),
