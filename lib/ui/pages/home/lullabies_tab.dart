@@ -67,6 +67,8 @@ class _LullabiesTabState extends State<LullabiesTab> {
           flex: 4,
           child: Slider(
             value: _position.inSeconds.toDouble(), 
+            activeColor: AppStyle.accentColor,
+            inactiveColor: AppStyle.backgroundColor,
             onChanged: (value) => _seekTo(value),
             max: audioPlayer.duration.inSeconds.toDouble(),
             min: 0,
@@ -81,12 +83,14 @@ class _LullabiesTabState extends State<LullabiesTab> {
           .listen((p) => setState(() => _position = p));
   }
 
-  void _play() {
-    audioPlayer.play(_lullabies.values.toList()[_currentLullaby]);
+  void _play() async {
+    await audioPlayer.play(_lullabies.values.toList()[_currentLullaby]);
+    setState(() {});
   }
 
-  void _pause() {
-    audioPlayer.pause();
+  void _pause() async {
+    await audioPlayer.pause();
+    setState(() {});
   }
 
   void _seekTo(double value) {
