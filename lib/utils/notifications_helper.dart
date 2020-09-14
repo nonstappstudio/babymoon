@@ -5,7 +5,7 @@ import '../main.dart';
 class NotificationsHelper {
 
   static void scheduleNotification({String title, String message, 
-    DateTime date}) async {
+    Time time}) async {
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'alarm_notif',
@@ -25,7 +25,7 @@ class NotificationsHelper {
         0,
         title,
         message,
-        Time(date.hour, date.minute, date.second),
+        time,
         platformChannelSpecifics);
   }
 

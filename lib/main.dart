@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         accentColor: AppStyle.accentColor,
         primaryColor: Colors.blue[800],
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MainScreen()

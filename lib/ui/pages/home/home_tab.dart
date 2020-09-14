@@ -2,10 +2,13 @@ import 'package:babymoon/models/day.dart';
 import 'package:babymoon/models/record.dart';
 import 'package:babymoon/services/repositories/day_repository.dart';
 import 'package:babymoon/services/repositories/record_repository.dart';
+import 'package:babymoon/services/repositories/user_repository.dart';
 import 'package:babymoon/ui/pages/add_record_page.dart';
 import 'package:babymoon/ui/text_styles.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/ui/widgets/home_tab_header.dart';
+import 'package:babymoon/utils/notifications_helper.dart';
+import 'package:babymoon/utils/records_statistics.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:babymoon/ui/widgets/gradient_button.dart';
 import 'package:babymoon/ui/widgets/records_in_date.dart';
@@ -138,9 +141,24 @@ class _HomeTabState extends State<HomeTab> {
     await DayRepository.deleteAllDays();
     setState(() {});
   }
+
+  void _initializeNotificationsForUser() async {
+    final user = await UserRepository.getUser();
+
+    final months = (user.baby.age.years / 12).ceil() + user.baby.age.months;
+
+    if (user.notificationsEnabled) {
+      NotificationsHelper.scheduleNotification(
+        title: 'Healthy sleep',
+        message: "It's perfect time for your baby to go sleep",
+        time: RecordsStatistics.getProposedSleepTime(months)
+      );
+    }
+  }
   
   @override
   void initState() {
+    _initializeNotificationsForUser();
     super.initState();
   }
 

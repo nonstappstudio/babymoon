@@ -4,27 +4,36 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class RecordsStatistics {
 
-  static Time getProposedSleepTime(List<Record> records, SleepType type) {
-    if (records.isNotEmpty) {
-      final _records = records.where((r) => r.type == type).toList();
-
-      int totalHour = 0;
-      int totalDuration = 0;
-
-      _records.forEach((r) { 
-        totalHour += r.dateTime.hour;
-        totalDuration += r.durationInMinutes;
-      });
-
-      return Time(
-        (totalHour / _records.length).ceil() 
-              - (totalDuration / _records.length).ceil(), 
-        0, 
-        0
-      );
-
+  static Time getProposedSleepTime(int months) {
+    
+    if (months >= 216) {
+      return Time(23, 0, 0);
+    } else if (months >= 160) {
+      return Time(22, 0, 0);
+    } else if (months >= 120) {
+      return Time(21, 0, 0);
+    } else if (months >= 108) {
+      return Time(20, 45, 0);
+    } else if (months >= 96) {
+      return Time(20, 30, 0);
+    } else if (months >= 84) {
+      return Time(20, 15, 0);
+    } else if (months >= 72) {
+      return Time(20, 0, 0);
+    } else if (months >= 60) {
+      return Time(19, 45, 0);
+    } else if (months >= 48) {
+      return Time(19, 30, 0);
+    } else if (months >= 36) {
+      return Time(19, 15, 0);
+    } else if (months >= 24) {
+      return Time(19, 0, 0);
+    } else if (months >= 12) {
+      return Time(18, 45, 0);
+    } else if (months >= 6) {
+      return Time(18, 30, 0);
     } else {
-      return Time(0, 27, 0);
+      return Time(18, 10, 0);
     }
   }
 

@@ -6,6 +6,7 @@ import 'package:babymoon/services/repositories/record_repository.dart';
 import 'package:babymoon/services/repositories/user_repository.dart';
 import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/text_styles.dart';
+import 'package:babymoon/ui/widgets/baby_card.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/ui/widgets/circle_border_view.dart';
 import 'package:babymoon/ui/widgets/error_body.dart';
@@ -118,31 +119,38 @@ class _StatisticsTabState extends State<StatisticsTab> {
   Widget get _noStatistics => Center(
     child: Padding(
       padding: const EdgeInsets.all(32.0),
-      child: CardLayout(
-        insidePadding: 24,
-        color: Colors.white.withOpacity(0.75),
-        child: Container(
-          height: 300,
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'No statistics yet',
-                textAlign: TextAlign.center,
-                style: TextStyles.whiteBoldText
-                      .copyWith(color: AppStyle.blueyColor, fontSize: 32),
-              ),
-              Space(24),
-              Text(
-                'Add your first sleep record on home page\n'
-                'to see some magic here',
-                textAlign: TextAlign.center,
-                style: TextStyles.cardContentStyle,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BabyCard(_user.baby),
+          Space(8.0),
+          CardLayout(
+            insidePadding: 24,
+            color: Colors.white.withOpacity(0.75),
+            child: Container(
+              height: 300,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'No statistics yet',
+                    textAlign: TextAlign.center,
+                    style: TextStyles.whiteBoldText
+                          .copyWith(color: AppStyle.blueyColor, fontSize: 32),
+                  ),
+                  Space(24),
+                  Text(
+                    'Add your first sleep record on home page\n'
+                    'to see some magic here',
+                    textAlign: TextAlign.center,
+                    style: TextStyles.cardContentStyle,
+                  )
+                ]
               )
-            ]
-          )
-        ),
+            ),
+          ),
+        ],
       ),
     ),
   );
@@ -153,51 +161,7 @@ class _StatisticsTabState extends State<StatisticsTab> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            CardLayout(
-              insidePadding: 16,
-              color: Colors.white.withOpacity(0.75),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 48.0),
-                      child: ImageIcon(
-                        Assets.baby,
-                        color: AppStyle.blueyColor,
-                        size: 65,
-                      ),
-                    ),
-                  ),
-                  Space(24),
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _user.baby.name,
-                          textAlign: TextAlign.center,
-                          style: TextStyles.whiteBoldText.copyWith(
-                            color: AppStyle.blueyColor,
-                            fontSize: 21
-                          ),
-                        ),
-                        Space(4),
-                        Text(
-                          'Age: $_babyAge',
-                          textAlign: TextAlign.center,
-                          style: TextStyles.cardContentStyle,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-            ),
+            BabyCard(_user.baby),
             Space(8.0),
             CardLayout(
               insidePadding: 16,

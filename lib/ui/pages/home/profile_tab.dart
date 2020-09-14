@@ -3,6 +3,7 @@ import 'package:babymoon/services/repositories/user_repository.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/ui/widgets/error_body.dart';
 import 'package:babymoon/utils/notifications_helper.dart';
+import 'package:babymoon/utils/records_statistics.dart';
 import 'package:babymoon/utils/space.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -22,10 +23,8 @@ class _ProfileTabState extends State<ProfileTab> {
 
   User _user;
 
-  bool _notifications;
-
   Widget get _healthySleep => SwitchListTile(
-    value: _notifications,
+    value: _user.notificationsEnabled,
     title: Text(
       'Healthy sleep',
       style: TextStyles.main.copyWith(
@@ -93,26 +92,76 @@ class _ProfileTabState extends State<ProfileTab> {
   }
 
   void _onRemindersChanged(bool value) async {
-    if (!value) {
-      final permissionStatus = await NotificationPermissions
+
+    final permissionStatus = await NotificationPermissions
           .getNotificationPermissionStatus();
 
-      if (permissionStatus == PermissionStatus.granted) {
-        NotificationsHelper.cancelAllNotifications();
-      }
+    if (_user.notificationsEnabled) {
+      
+      NotificationsHelper.cancelAllNotifications();
 
-      setState(() => _notifications = false);
+      _user.notificationsEnabled = false;
+      await UserRepository.updateUser(_user);
+      _refresh();
+
     } else {
-      if (await _requestPermission()) setState(() => _notifications = true);
-      NotificationsHelper.scheduleNotification(
-        title: "Bed time",
-        message: "It's a perfect sleep time for your baby",
-        date: DateTime.now().add(Duration(seconds: 5))
-      );
+
+      if (permissionStatus == PermissionStatus.granted) {
+        _user.notificationsEnabled = true;
+        await UserRepository.updateUser(_user);
+        _refresh();
+
+        final months = (_user.baby.age.years / 12)
+                       .ceil() + _user.baby.age.months;
+
+        NotificationsHelper.scheduleNotification(
+          title: 'Healthy sleep',
+          message: "It's perfect time for your baby to go sleep",
+          time: RecordsStatistics.getProposedSleepTime(months)
+        );
+      } else {
+        showDialog(
+          context: context, 
+          barrierDismissible: true,
+          builder: (c) => AlertDialog(
+            title: Text(
+              'Permission required',
+              style: TextStyles.main.copyWith(
+                color: AppStyle.blueyColor,
+                fontSize: 18
+              ),
+            ),
+            content: Text(
+              'To enable this feature,\n'
+              'notifications permission must be granted',
+              style: TextStyles.errorStyle,
+            ),
+            actions: [
+              FlatButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                  side: BorderSide(color: AppStyle.blueyColor, width: 1)
+                ),
+                onPressed: () async {
+                  final result = await _requestPermission();
+
+                  if (result != null) {
+                    Navigator.of(context).pop();
+                  }
+                },
+                child: Text(
+                  'Grant permission',
+                  style: TextStyles.main.copyWith(
+                    color: AppStyle.blueyColor,
+                    fontWeight: FontWeight.normal
+                  )
+                ),
+              )
+            ],
+          )
+        );
+      }
     }
-    _user.notificationsEnabled = _notifications;
-    UserRepository.updateUser(_user);
-    setState(() {});
   }
 
   Future<bool> _requestPermission() async {
@@ -132,18 +181,6 @@ class _ProfileTabState extends State<ProfileTab> {
     } else {
       return false;
     }
-  }
-
-  void _initializeNotifications() async {
-    final user = await UserRepository.getUser();
-
-    setState(() => _notifications = user.notificationsEnabled);
-  }
-
-  @override
-  void initState() {
-    _initializeNotifications();
-    super.initState();
   }
 
   @override

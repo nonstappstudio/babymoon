@@ -6,6 +6,7 @@ import 'package:babymoon/ui/text_styles.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/utils/assets.dart';
 import 'package:babymoon/utils/space.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:notification_permissions/notification_permissions.dart' as np;
@@ -74,6 +75,7 @@ class FirstLaunchPage extends StatelessWidget {
             attribute: 'name',
             controller: _nameController,
             maxLines: 1,
+            textCapitalization: TextCapitalization.words,
             style: TextStyles.main,
             decoration: InputDecoration(
               labelText: 'Name',
@@ -114,6 +116,7 @@ class FirstLaunchPage extends StatelessWidget {
             style: TextStyles.main,
             controller: _birthdayController,
             decoration: InputDecoration(
+              fillColor: AppStyle.blueyColor,
               labelText: 'Birthday',
               labelStyle: TextStyles.main,
               errorStyle: TextStyles.errorStyle,
@@ -240,30 +243,14 @@ class FirstLaunchPage extends StatelessWidget {
 
   bool get _validateForm => _fbKey.currentState.validate();
 
-  Future<bool> get _permissionVariable async {
-    final permissionStatus = await np.NotificationPermissions
-          .getNotificationPermissionStatus();
-    
-    if (permissionStatus == np.PermissionStatus.denied) {
-
-      await np.NotificationPermissions.requestNotificationPermissions();
-      return await np.NotificationPermissions
-        .getNotificationPermissionStatus() == np.PermissionStatus.granted;
-
-    } else {
-
-      await Permission.notification.request();
-      return await Permission.notification.status == PermissionStatus.granted;
-
-    }
-  }
-
   void _forward(BuildContext context) async {
     if (_controller.page == 3) {
       //save
     } else if (_controller.page == 2) {
+      final bool notifications = _switchKey.currentState
+                            .fields['notifications'].currentState.value;
 
-      final user = User(
+      User user = User(
           baby: Baby(
             birthday: DateTime.parse(_birthdayController.text.trim()),
             name: _nameController.text.trim()
@@ -271,17 +258,67 @@ class FirstLaunchPage extends StatelessWidget {
           cashCount: 0,
           id: DateTime.now().millisecondsSinceEpoch,
           isPremium: false,
-          notificationsEnabled: await _permissionVariable
         );
 
-      final result = await UserRepository.insertUser(user);
+      if (notifications) {
+        if (await Permission.notification.isGranted) {
+          user.notificationsEnabled = true;
+        } else {
+          showDialog(
+            context: context, 
+            barrierDismissible: true,
+            builder: (c) => AlertDialog(
+              title: Text(
+                'Permission required',
+                style: TextStyles.main.copyWith(
+                  color: AppStyle.blueyColor,
+                  fontSize: 18
+                ),
+              ),
+              content: Text(
+                'To enable this feature,\n'
+                'notifications permission must be granted',
+                style: TextStyles.errorStyle,
+              ),
+              actions: [
+                FlatButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                    side: BorderSide(color: AppStyle.blueyColor, width: 1)
+                  ),
+                  onPressed: () async {
+                    final result = await _requestPermission();
 
-      if (result != null) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-            builder: (c) => HomePage()
-          )
-        );
+                    if (result != null) {
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  child: Text(
+                    'Grant permission',
+                    style: TextStyles.main.copyWith(
+                      color: AppStyle.blueyColor,
+                      fontWeight: FontWeight.normal
+                    )
+                  ),
+                )
+              ],
+            )
+          );
+        }
+      } else {
+        user.notificationsEnabled = false;
+      }
+
+      if (user.notificationsEnabled != null) {
+        final result = await UserRepository.insertUser(user);
+
+        if (result != null) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (c) => HomePage()
+            )
+          );
+        }
       }
 
     } else if (_controller.page == 1) {
