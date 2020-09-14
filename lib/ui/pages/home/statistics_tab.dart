@@ -72,11 +72,12 @@ class _StatisticsTabState extends State<StatisticsTab> {
     handler: FlutterSliderHandler(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppStyle.blueyColor
+        color: AppStyle.accentColor
       ),
       child: Text(
         '${RecordsStatistics.getProposedHours(_ageInMonths).ceil()}',
-        style: TextStyles.cardContentStyle.copyWith(color: AppStyle.accentColor)
+        style: TextStyles.cardContentStyle
+            .copyWith(color: AppStyle.blueyColor)
       )
     ),
     trackBar: FlutterSliderTrackBar(
