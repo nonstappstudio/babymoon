@@ -25,8 +25,6 @@ class _LullabiesTabState extends State<LullabiesTab> {
     'Rock a Bye Baby':'https://www.johnsonsbaby.co.za/sites/jbaby_menap/files/rockabyebaby.mp3'
   };
 
-  bool _isRepeat;
-
   Widget _leadingIcon(int index) {
 
     final isPlay = _currentLullaby == index;
@@ -48,22 +46,6 @@ class _LullabiesTabState extends State<LullabiesTab> {
       );
   }
 
-  Widget _trailingIcon(index) {
-    final bool isCurrent = _currentLullaby == index;
-
-    if (isCurrent) {
-      return IconButton(
-        onPressed: () => setState(() => _isRepeat == !_isRepeat),
-        icon: Icon(
-          Icons.repeat, 
-          color: _isRepeat ? AppStyle.accentColor : AppStyle.unselectedColor
-        ),
-      );
-    } else {
-      return Container(width: 0);
-    }
-  }
-
   void _play() async {
     await audioPlayer.play(_lullabies.values.toList()[_currentLullaby]);
     setState(() {});
@@ -81,7 +63,6 @@ class _LullabiesTabState extends State<LullabiesTab> {
 
   @override
   void initState() {
-    _isRepeat = false;
     _currentLullaby = null;
     super.initState();
   }
@@ -123,7 +104,6 @@ class _LullabiesTabState extends State<LullabiesTab> {
                       _lullabies.keys.toList()[index],
                       style: TextStyles.mainWhite,
                     ),
-                    //trailing: _trailingIcon(index)
                   ),
                 );
               }
