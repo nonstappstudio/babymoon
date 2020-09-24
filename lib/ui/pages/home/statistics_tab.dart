@@ -101,17 +101,17 @@ class _StatisticsTabState extends State<StatisticsTab> {
   }
 
   Widget get _noStatistics => Padding(
-    padding: const EdgeInsets.all(32.0),
+    padding: const EdgeInsets.all(16.0),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        BabyCard(_user.baby, false),
+        BabyCard(_user.baby, true),
         Space(8.0),
         CardLayout(
           insidePadding: 24,
-          color: Colors.white.withOpacity(0.75),
+          color: AppStyle.backgroundColor.withOpacity(0.75),
           child: Container(
-            height: 300,
+            height: 240,
             width: MediaQuery.of(context).size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -120,14 +120,18 @@ class _StatisticsTabState extends State<StatisticsTab> {
                   'No statistics yet',
                   textAlign: TextAlign.center,
                   style: TextStyles.whiteBoldText
-                        .copyWith(color: AppStyle.blueyColor, fontSize: 32),
+                        .copyWith(color: AppStyle.accentColor, fontSize: 26),
                 ),
                 Space(24),
                 Text(
                   'Add your first sleep record on home page\n'
                   'to see some magic here',
                   textAlign: TextAlign.center,
-                  style: TextStyles.cardContentStyle,
+                  style: TextStyles.cardContentStyle.copyWith(
+                    color: AppStyle.accentColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300
+                  ),
                 )
               ]
             )

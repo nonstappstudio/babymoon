@@ -109,7 +109,7 @@ class FirstLaunchPage extends StatelessWidget {
             inputType: InputType.date,
             resetIcon: Icon(Icons.close, color: AppStyle.accentColor),
             maxLines: 1,
-            onChanged: (value) => _birthday,
+            onChanged: (value) => _birthday = value,
             firstDate: DateTime(
               DateTime.now().year - 50,
               DateTime.now().month,

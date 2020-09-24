@@ -54,6 +54,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         backgroundColor: AppStyle.backgroundColor,
         title: Text('Babymoon'),
+        centerTitle: true,
       ),
       body: Container(
         decoration: BoxDecoration(
