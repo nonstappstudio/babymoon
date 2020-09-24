@@ -141,7 +141,8 @@ class _ProfileTabState extends State<ProfileTab> {
           Space(8),
           _notificationPreferences,
           Space(8),
-          if (!_user.isPremium) _premiumRemoveAds
+          //TODO: uncomment after handling remove ads
+          //if (!_user.isPremium) _premiumRemoveAds
         ],
       ),
     ),

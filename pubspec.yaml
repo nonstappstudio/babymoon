@@ -24,6 +24,7 @@ dependencies:
   notification_permissions: ^0.4.7
   audioplayer: ^0.8.1
   flutter_launcher_icons: ^0.7.5
+  in_app_purchase: ^0.3.4+9
 
 dev_dependencies:
   flutter_test:

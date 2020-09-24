@@ -70,9 +70,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _changePage(int index) {
-    if (_adCounter % 2 == 0) {
-      _showAd();
-    }
+    //TODO: uncomment after handling remove ads
+    // if (_adCounter % 2 == 0) {
+    //   _showAd();
+    // }
     _pageController.animateToPage(
       index, 
       duration: Duration(milliseconds: 150), 
