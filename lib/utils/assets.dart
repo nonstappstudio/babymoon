@@ -10,5 +10,8 @@ class Assets {
 
   static ImageProvider get toy => 
       AssetImage('assets/icons/toy.png');
+
+  static ImageProvider get removeAds => 
+      AssetImage('assets/icons/remove_ads.png');
   
 }

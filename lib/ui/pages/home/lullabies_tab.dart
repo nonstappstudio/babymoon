@@ -78,11 +78,11 @@ class _LullabiesTabState extends State<LullabiesTab> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Lullabies provided by Johnson's baby",
-              style: TextStyles.formTextStyle,
+              "Lullabies",
+              style: TextStyles.formTextStyle.copyWith(fontSize: 24),
             ),
           ),
-          Space(64),
+          Space(24),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ListView.separated(

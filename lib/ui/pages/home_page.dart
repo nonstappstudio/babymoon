@@ -4,6 +4,7 @@ import 'package:babymoon/ui/pages/home/lullabies_tab.dart';
 import 'package:babymoon/ui/pages/home/profile_tab.dart';
 import 'package:babymoon/ui/pages/home/statistics_tab.dart';
 import 'package:babymoon/ui/text_styles.dart';
+import 'package:babymoon/utils/assets.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,6 +34,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void _showAboutDialog() {
+    showDialog(
+      context: context,
+      builder: (c) => AboutDialog(
+        children: [
+          Text(
+            'Icons provided by Icons8\n'
+            "Lullabies provided by Johnson's baby\n\n"
+            'Developed by Nonstapp',
+            style: TextStyles.cardContentStyle,
+            textAlign: TextAlign.start,
+          )
+        ],
+      )
+    );
+  }
+
   void _changePage(int index) {
     _pageController.animateToPage(
       index, 
@@ -59,6 +77,12 @@ class _HomePageState extends State<HomePage> {
           style: TextStyles.formTextStyle
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.info_outline, color: AppStyle.accentColor),
+            onPressed: _showAboutDialog,
+          )
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(

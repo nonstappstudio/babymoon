@@ -3,6 +3,7 @@ import 'package:babymoon/services/repositories/user_repository.dart';
 import 'package:babymoon/ui/widgets/baby_card.dart';
 import 'package:babymoon/ui/widgets/card_layout.dart';
 import 'package:babymoon/ui/widgets/error_body.dart';
+import 'package:babymoon/utils/assets.dart';
 import 'package:babymoon/utils/notifications_helper.dart';
 import 'package:babymoon/utils/records_statistics.dart';
 import 'package:babymoon/utils/space.dart';
@@ -38,54 +39,110 @@ class _ProfileTabState extends State<ProfileTab> {
     onChanged: (value) => _onRemindersChanged(value)
   );
 
-  Widget get _content => Padding(
-    padding: const EdgeInsets.all(16.0),
+  Widget get _notificationPreferences => CardLayout(
+    color: AppStyle.backgroundColor.withOpacity(0.7),
+    insidePadding: 16,
+    child: FormBuilder(
+      key: _switchKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: Icon(
+              Icons.notifications_active, 
+              color: AppStyle.accentColor, 
+              size: 54
+            )
+          ),
+          Space(16),
+          Center(
+            child: Text(
+              'Healthy sleep',
+              style: TextStyles.appBarStyle.copyWith(fontSize: 26),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Space(24),
+          Text(
+            "Get proposed sleep time reminders based on your baby's age"
+            " & professionals",
+            style: TextStyles.appBarStyle
+                .copyWith(fontSize: 18, fontWeight: FontWeight.w200),
+            textAlign: TextAlign.center,
+          ),
+          Space(8),
+          _healthySleep
+        ],
+      ),
+    ),
+  );
+
+  Widget get _premiumRemoveAds => CardLayout(
+    color: AppStyle.backgroundColor.withOpacity(0.7),
+    insidePadding: 16,
     child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BabyCard(_user.baby, true),
-        Space(8),
-        _notificationPreferences
+        Center(
+          child: ImageIcon(
+            Assets.removeAds, 
+            color: AppStyle.accentColor, 
+            size: 50
+          )
+        ),
+        Space(16),
+        Center(
+          child: Text(
+            'Remove ads',
+            style: TextStyles.appBarStyle.copyWith(fontSize: 26),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Space(24),
+        Text(
+          'For better experience, remove all ads from the application'
+          ' and support our organisation',
+          style: TextStyles.appBarStyle
+              .copyWith(fontSize: 18, fontWeight: FontWeight.w200),
+          textAlign: TextAlign.center,
+        ),
+        Space(16),
+        RaisedButton(
+          onPressed: () {
+            //TODO: remove ads
+          },
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(80.0)
+          ),
+          color: AppStyle.accentColor,
+          padding: EdgeInsets.all(0.0),
+          child: Container(
+            alignment: Alignment.center,
+            child: Text(
+              'Remove ads',
+              textAlign: TextAlign.center,
+              style: TextStyles.buttonTextStyle
+                .copyWith(color: Colors.black), 
+            ),
+          ),
+        ),
       ],
     ),
   );
 
-  Widget get _notificationPreferences => SingleChildScrollView(
-    child: CardLayout(
-      color: AppStyle.backgroundColor.withOpacity(0.7),
-      insidePadding: 16,
-      child: FormBuilder(
-        key: _switchKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Icon(
-                Icons.notifications_active, 
-                color: AppStyle.accentColor, 
-                size: 54
-              )
-            ),
-            Space(16),
-            Center(
-              child: Text(
-                'Healthy sleep',
-                style: TextStyles.appBarStyle.copyWith(fontSize: 26),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Space(24),
-            Text(
-              "Get proposed sleep time reminders based on your baby's age"
-              " & professional doctors",
-              style: TextStyles.appBarStyle
-                  .copyWith(fontSize: 18, fontWeight: FontWeight.w200),
-              textAlign: TextAlign.center,
-            ),
-            Space(8),
-            _healthySleep
-          ],
-        ),
+  Widget get _content => SingleChildScrollView(
+    child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          BabyCard(_user.baby, true),
+          Space(8),
+          _notificationPreferences,
+          Space(8),
+          if (!_user.isPremium) _premiumRemoveAds
+        ],
       ),
     ),
   );
