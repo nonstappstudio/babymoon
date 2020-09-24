@@ -159,9 +159,37 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   void _clearRecords() async {
-    await RecordRepository.deleteAllRecords();
-    await DayRepository.deleteAllDays();
-    setState(() {});
+    final bool result = await showDialog(
+      context: context,
+      builder: (c) => AlertDialog(
+       title: Text('Clear records'),
+        content: Text(
+          'Are you sure, that you want to delete all records?'
+        ),
+        actions: [
+          FlatButton(
+            child: Text(
+              'Cancel', 
+              style: TextStyle(fontWeight: FontWeight.w400)
+            ),
+            textColor: AppStyle.unselectedColor,
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          FlatButton(
+            child: Text('Yes', style: TextStyle(fontWeight: FontWeight.w600)),
+            textColor: AppStyle.blueyColor,
+            onPressed: () => Navigator.of(context).pop(true),
+          )
+        ],
+      ));
+
+    if (result != null) {
+      if (result) {
+        await RecordRepository.deleteAllRecords();
+        await DayRepository.deleteAllDays();
+        setState(() {});
+      }
+    }
   }
 
   void _initializeNotificationsForUser() async {
