@@ -124,7 +124,7 @@ class _ProfileTabState extends State<ProfileTab> {
               'Remove ads',
               textAlign: TextAlign.center,
               style: TextStyles.buttonTextStyle
-                .copyWith(color: Colors.black), 
+                .copyWith(color: AppStyle.blueyColor), 
             ),
           ),
         ),
