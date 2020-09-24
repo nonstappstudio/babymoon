@@ -1,4 +1,4 @@
-package com.example.babymoon
+package com.nonstapp.babymoon
 
 import io.flutter.embedding.android.FlutterActivity
 
