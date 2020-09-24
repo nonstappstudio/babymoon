@@ -100,42 +100,40 @@ class _StatisticsTabState extends State<StatisticsTab> {
     );
   }
 
-  Widget get _noStatistics => Center(
-    child: Padding(
-      padding: const EdgeInsets.all(32.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BabyCard(_user.baby, false),
-          Space(8.0),
-          CardLayout(
-            insidePadding: 24,
-            color: Colors.white.withOpacity(0.75),
-            child: Container(
-              height: 300,
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'No statistics yet',
-                    textAlign: TextAlign.center,
-                    style: TextStyles.whiteBoldText
-                          .copyWith(color: AppStyle.blueyColor, fontSize: 32),
-                  ),
-                  Space(24),
-                  Text(
-                    'Add your first sleep record on home page\n'
-                    'to see some magic here',
-                    textAlign: TextAlign.center,
-                    style: TextStyles.cardContentStyle,
-                  )
-                ]
-              )
-            ),
+  Widget get _noStatistics => Padding(
+    padding: const EdgeInsets.all(32.0),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        BabyCard(_user.baby, false),
+        Space(8.0),
+        CardLayout(
+          insidePadding: 24,
+          color: Colors.white.withOpacity(0.75),
+          child: Container(
+            height: 300,
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'No statistics yet',
+                  textAlign: TextAlign.center,
+                  style: TextStyles.whiteBoldText
+                        .copyWith(color: AppStyle.blueyColor, fontSize: 32),
+                ),
+                Space(24),
+                Text(
+                  'Add your first sleep record on home page\n'
+                  'to see some magic here',
+                  textAlign: TextAlign.center,
+                  style: TextStyles.cardContentStyle,
+                )
+              ]
+            )
           ),
-        ],
-      ),
+        ),
+      ],
     ),
   );
 
