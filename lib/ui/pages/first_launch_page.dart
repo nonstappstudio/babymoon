@@ -174,7 +174,7 @@ class FirstLaunchPage extends StatelessWidget {
           Space(48),
           Text(
             "Get proposed sleep time reminders based on your baby's age"
-            " \n&\nprofessional doctors",
+            " & professional doctors",
             style: TextStyles.appBarStyle
                 .copyWith(fontSize: 18, fontWeight: FontWeight.w200),
             textAlign: TextAlign.center,
@@ -344,6 +344,11 @@ class FirstLaunchPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppStyle.blueyColor,
       appBar: AppBar(
+        title: Text(
+          'Babymoon', 
+          style: TextStyles.formTextStyle
+        ),
+        centerTitle: true,
         elevation: 0,
         backgroundColor: AppStyle.backgroundColor,
       ),

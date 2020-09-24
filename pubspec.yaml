@@ -23,10 +23,16 @@ dependencies:
   flutter_local_notifications: ^1.4.4+4
   notification_permissions: ^0.4.7
   audioplayer: ^0.8.1
+  flutter_launcher_icons: ^0.7.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  image_path: "assets/icons/app_icon.png"
+  ios: true
+  android: true
 
 flutter:
   uses-material-design: true
