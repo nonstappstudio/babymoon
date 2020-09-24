@@ -3,6 +3,7 @@ import 'package:babymoon/ui/pages/home/home_tab.dart';
 import 'package:babymoon/ui/pages/home/lullabies_tab.dart';
 import 'package:babymoon/ui/pages/home/profile_tab.dart';
 import 'package:babymoon/ui/pages/home/statistics_tab.dart';
+import 'package:babymoon/ui/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   Map<String, Widget> get _bottomItems => {
     'Home': Icon(Icons.home),
     'Statistics': Icon(Icons.insert_chart),
-    'Library': Icon(Icons.library_books),
+    'Lullabies': Icon(Icons.queue_music),
     'Profile': Icon(Icons.person)
   };
 
@@ -53,7 +54,11 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppStyle.backgroundColor,
-        title: Text('Babymoon'),
+        title: Text(
+          'Babymoon', 
+          style: TextStyles.formTextStyle
+        ),
+        centerTitle: true,
       ),
       body: Container(
         decoration: BoxDecoration(

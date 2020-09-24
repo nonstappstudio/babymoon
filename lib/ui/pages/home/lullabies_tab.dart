@@ -41,7 +41,7 @@ class _LullabiesTabState extends State<LullabiesTab> {
         },
         icon: Icon(
           isPlay ? Icons.pause : Icons.play_arrow, 
-          color: Colors.white
+          color: AppStyle.accentColor
         )
       );
   }
@@ -79,7 +79,7 @@ class _LullabiesTabState extends State<LullabiesTab> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               "Lullabies provided by Johnson's baby",
-              style: TextStyles.main,
+              style: TextStyles.formTextStyle,
             ),
           ),
           Space(64),
@@ -102,7 +102,7 @@ class _LullabiesTabState extends State<LullabiesTab> {
                     leading: _leadingIcon(index),
                     title: Text(
                       _lullabies.keys.toList()[index],
-                      style: TextStyles.mainWhite,
+                      style: TextStyles.formTextStyle,
                     ),
                   ),
                 );

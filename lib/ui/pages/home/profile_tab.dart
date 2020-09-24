@@ -77,7 +77,7 @@ class _ProfileTabState extends State<ProfileTab> {
             Space(24),
             Text(
               "Get proposed sleep time reminders based on your baby's age"
-              " \n&\nprofessional doctors",
+              " & professional doctors",
               style: TextStyles.appBarStyle
                   .copyWith(fontSize: 18, fontWeight: FontWeight.w200),
               textAlign: TextAlign.center,
