@@ -23,7 +23,6 @@ dependencies:
   flutter_local_notifications: ^1.4.4+4
   notification_permissions: ^0.4.7
   audioplayer: ^0.8.1
-  rate_my_app: ^0.7.2
 
 dev_dependencies:
   flutter_test:

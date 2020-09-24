@@ -22,12 +22,14 @@ class FirstLaunchPage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _birthdayController = TextEditingController();
 
+  static DateTime _birthday;
+
   Widget get _welcomeScreen => SingleChildScrollView(
     child: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Space(64),
+        Space(16),
         Center(
           child: ImageIcon(Assets.toy, color: AppStyle.accentColor, size: 64)
         ),
@@ -58,7 +60,7 @@ class FirstLaunchPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Space(64),
+          Space(16),
           Center(
             child: ImageIcon(Assets.baby, color: AppStyle.accentColor, size: 64)
           ),
@@ -107,6 +109,7 @@ class FirstLaunchPage extends StatelessWidget {
             inputType: InputType.date,
             resetIcon: Icon(Icons.close, color: AppStyle.accentColor),
             maxLines: 1,
+            onChanged: (value) => _birthday,
             firstDate: DateTime(
               DateTime.now().year - 50,
               DateTime.now().month,
@@ -152,7 +155,7 @@ class FirstLaunchPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Space(64),
+          Space(16),
           Center(
             child: Icon(
               Icons.notifications_active, 
@@ -244,15 +247,13 @@ class FirstLaunchPage extends StatelessWidget {
   bool get _validateForm => _fbKey.currentState.validate();
 
   void _forward(BuildContext context) async {
-    if (_controller.page == 3) {
-      //save
-    } else if (_controller.page == 2) {
+    if (_controller.page == 2) {
       final bool notifications = _switchKey.currentState
                             .fields['notifications'].currentState.value;
 
       User user = User(
           baby: Baby(
-            birthday: DateTime.parse(_birthdayController.text.trim()),
+            birthday: _birthday,
             name: _nameController.text.trim()
           ),
           cashCount: 0,
@@ -357,7 +358,7 @@ class FirstLaunchPage extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              flex: 4,
+              flex: 8,
               child: CardLayout(
                 color: AppStyle.backgroundColor.withOpacity(0.7),
                 insidePadding: 16,
@@ -372,7 +373,7 @@ class FirstLaunchPage extends StatelessWidget {
                 ),
               ),
             ),
-            Space(64),
+            Space(32),
             Flexible(
               flex: 1,
               child: _nextButton(context)
