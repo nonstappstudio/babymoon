@@ -25,6 +25,7 @@ dependencies:
   audioplayer: ^0.8.1
   flutter_launcher_icons: ^0.7.5
   in_app_purchase: ^0.3.4+9
+  rate_my_app: ^0.7.2
 
 dev_dependencies:
   flutter_test:

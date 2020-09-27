@@ -1,4 +1,5 @@
-import 'package:babymoon/services/repositories/user_repository.dart';
+import 'dart:io';
+
 import 'package:babymoon/ui/app_style.dart';
 import 'package:babymoon/ui/pages/home/home_tab.dart';
 import 'package:babymoon/ui/pages/home/lullabies_tab.dart';
@@ -7,6 +8,7 @@ import 'package:babymoon/ui/pages/home/statistics_tab.dart';
 import 'package:babymoon/ui/text_styles.dart';
 import 'package:babymoon/ui/widgets/interstitial_ad.dart';
 import 'package:flutter/material.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -15,6 +17,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  RateMyApp _rateMyApp = RateMyApp(
+    preferencesPrefix: 'rateMyApp_',
+    minDays: 0,
+    minLaunches: 5,
+    remindDays: 0,
+    remindLaunches: 5,
+  );
 
   PageController _pageController;
   int _currentPage;
@@ -34,6 +44,59 @@ class _HomePageState extends State<HomePage> {
       icon: icon,
       title: Text(label)
     );
+  }
+
+  void _initializeRateMyApp() {
+    _rateMyApp.init().then((_) {
+      if (_rateMyApp.shouldOpenDialog) {
+        _rateMyApp.showStarRateDialog(
+          context,
+          title: 'Enjoying Babymoon?',
+          message: 'Please leave a rating!',
+          actionsBuilder: (context, stars) {
+            return [
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  if (stars != null) {
+                    _rateMyApp.save().then((v) => Navigator.pop(context));
+
+                    if (stars <= 3) {
+                      print('Navigate to Contact Us Screen');
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (_) => ContactUsScreen(),
+                      //   ),
+                      // );
+                    } else if (stars <= 5) {
+                      print('Leave a Review Dialog');
+                      _rateMyApp.launchStore();
+                    }
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+              ),
+            ];
+          },
+          onDismissed: () => _rateMyApp
+                            .callEvent(RateMyAppEventType.laterButtonPressed),
+          dialogStyle: DialogStyle(
+            titleAlign: TextAlign.center,
+            messageAlign: TextAlign.center,
+            messagePadding: EdgeInsets.only(bottom: 20.0),
+          ),
+          ignoreNativeDialog: Platform.isAndroid,
+          starRatingOptions: StarRatingOptions(
+            initialRating: 5.0,
+            allowHalfRating: false,
+            starsBorderColor: Colors.amber,
+            starsFillColor: Colors.amber,
+          ),
+        );
+      }
+    });
   }
 
   void _showAboutDialog() {
@@ -85,6 +148,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    _initializeRateMyApp();
     _adCounter = 0;
     _pageController = PageController(initialPage: 0);
     _currentPage = 0;
