@@ -10,7 +10,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:notification_permissions/notification_permissions.dart' as np;
-import 'package:permission_handler/permission_handler.dart';
 import '../app_style.dart';
 
 class FirstLaunchPage extends StatelessWidget {
@@ -262,7 +261,8 @@ class FirstLaunchPage extends StatelessWidget {
         );
 
       if (notifications) {
-        if (await Permission.notification.isGranted) {
+        if (await np.NotificationPermissions.getNotificationPermissionStatus() 
+          == np.PermissionStatus.granted) {
           user.notificationsEnabled = true;
         } else {
           showDialog(

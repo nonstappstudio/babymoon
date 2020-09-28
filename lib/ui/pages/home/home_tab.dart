@@ -13,8 +13,7 @@ import 'package:babymoon/utils/space.dart';
 import 'package:babymoon/ui/widgets/gradient_button.dart';
 import 'package:babymoon/ui/widgets/records_in_date.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
-
+import 'package:notification_permissions/notification_permissions.dart' as np;
 import '../../app_style.dart';
 
 class HomeTab extends StatefulWidget {
@@ -197,7 +196,8 @@ class _HomeTabState extends State<HomeTab> {
 
     final months = (user.baby.age.years / 12).ceil() + user.baby.age.months;
 
-    if (user.notificationsEnabled && await Permission.notification.isGranted) {
+    if (user.notificationsEnabled && await np.NotificationPermissions
+      .getNotificationPermissionStatus() == np.PermissionStatus.granted) {
       NotificationsHelper.scheduleNotification(
         title: 'Healthy sleep',
         message: "It's perfect time for your baby to go sleep",
