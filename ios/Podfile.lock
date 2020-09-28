@@ -14,8 +14,6 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
-  - "permission_handler (5.0.1+1)":
-    - Flutter
   - phone_number (0.6.2):
     - Flutter
     - PhoneNumberKit/PhoneNumberKitCore (~> 3.2.0)
@@ -34,7 +32,6 @@ DEPENDENCIES:
   - in_app_purchase (from `.symlinks/plugins/in_app_purchase/ios`)
   - notification_permissions (from `.symlinks/plugins/notification_permissions/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
-  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - phone_number (from `.symlinks/plugins/phone_number/ios`)
   - rate_my_app (from `.symlinks/plugins/rate_my_app/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -60,8 +57,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/notification_permissions/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
-  permission_handler:
-    :path: ".symlinks/plugins/permission_handler/ios"
   phone_number:
     :path: ".symlinks/plugins/phone_number/ios"
   rate_my_app:
@@ -78,12 +73,11 @@ SPEC CHECKSUMS:
   in_app_purchase: 3e2155afa9d03d4fa32d9e62d567885080ce97d6
   notification_permissions: b74860c2967c1579243a675e63cd55e0ae75cef7
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  permission_handler: eac8e15b4a1a3fba55b761d19f3f4e6b005d15b6
   phone_number: b545f5b7d9711bec0f020c7df43ae5a82119f4ad
   PhoneNumberKit: df411d46177d1492da84e10b6c093846dd861452
   rate_my_app: 3b64dd0876bd286001595ee2e69193e757c4d77c
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
 
-PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
+PODFILE CHECKSUM: e9d2e36fdb111ed27aa58aa68798042a4da5c3d8
 
 COCOAPODS: 1.9.3
